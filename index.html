@@ -3,41 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Solar Integrada | CEP - Técnico em Edificações</title>
+    <title>Calculadora Solar Integrada | Pré-Dimensionamento & Viabilidade (Térmico e Fotovoltaico)</title>
     <style>
         :root {
-            --primary: #103460;
-            --primary-light: #1e4b85;
+            --primary: #0f2b48;
+            --primary-light: #1b497a;
             --secondary: #d97706;
             --secondary-hover: #b45309;
-            --success: #166534;
+            --success: #15803d;
             --success-light: #22c55e;
-            --dark: #1e293b;
-            --gray-100: #f8fafc;
+            --success-bg: #f0fdf4;
+            --success-border: #bbf7d0;
+            --dark: #0f172a;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
             --gray-200: #e2e8f0;
             --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
             --gray-600: #475569;
+            --gray-700: #334155;
             --white: #ffffff;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            --header-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+            --header-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.12);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
             background-color: #f1f5f9;
             color: var(--dark);
             line-height: 1.5;
-            padding-bottom: 50px;
+            padding-bottom: 60px;
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, #0b2545 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #071729 100%);
             color: var(--white);
             padding: 24px 20px;
             box-shadow: var(--header-shadow);
@@ -45,7 +50,7 @@
         }
 
         .header-content {
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -55,13 +60,16 @@
         }
 
         .header-title h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.6rem;
+            font-weight: 800;
             letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .header-title p {
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             color: #94a3b8;
             margin-top: 4px;
         }
@@ -73,12 +81,13 @@
             padding: 6px 14px;
             border-radius: 9999px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 25px auto;
             padding: 0 20px;
         }
@@ -97,7 +106,7 @@
 
         .tab-btn {
             flex: 1;
-            min-width: 170px;
+            min-width: 190px;
             padding: 12px 16px;
             border: none;
             background: transparent;
@@ -110,7 +119,8 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
+            white-space: nowrap;
         }
 
         .tab-btn:hover {
@@ -121,7 +131,7 @@
         .tab-btn.active {
             background: var(--primary);
             color: var(--white);
-            box-shadow: 0 4px 6px rgba(16, 52, 96, 0.2);
+            box-shadow: 0 4px 6px rgba(15, 43, 72, 0.25);
         }
 
         /* Grid Layout */
@@ -131,8 +141,14 @@
             gap: 25px;
         }
 
-        @media (max-width: 900px) {
-            .grid-2 {
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 960px) {
+            .grid-2, .grid-3 {
                 grid-template-columns: 1fr;
             }
         }
@@ -156,7 +172,7 @@
         }
 
         .card-header h2 {
-            font-size: 1.2rem;
+            font-size: 1.18rem;
             color: var(--primary);
             font-weight: 700;
             display: flex;
@@ -175,7 +191,7 @@
 
         /* Form elements */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .form-group label {
@@ -183,31 +199,31 @@
             font-weight: 600;
             font-size: 0.88rem;
             color: var(--dark);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .form-group small {
             display: block;
             color: var(--gray-600);
-            font-size: 0.78rem;
-            margin-top: 4px;
+            font-size: 0.77rem;
+            margin-top: 3px;
         }
 
         .form-control {
             width: 100%;
-            padding: 10px 14px;
+            padding: 9px 12px;
             border: 1.5px solid var(--gray-300);
             border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: var(--dark);
             background: var(--white);
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(16, 52, 96, 0.15);
+            box-shadow: 0 0 0 3px rgba(15, 43, 72, 0.15);
         }
 
         .input-row {
@@ -216,18 +232,57 @@
             gap: 14px;
         }
 
+        .input-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .input-row, .input-row-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Collapsible Parameter Box */
+        .details-box {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            padding: 14px;
+            margin: 15px 0;
+        }
+
+        .details-box summary {
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: var(--primary);
+            cursor: pointer;
+            outline: none;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .details-content {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--gray-300);
+        }
+
         /* Result Metrics */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 12px;
             margin-bottom: 20px;
         }
 
         .metric-card {
-            background: var(--gray-100);
-            border: 1px solid var(--gray-200);
-            padding: 14px;
+            background: var(--gray-50);
+            border: 1.5px solid var(--gray-200);
+            padding: 14px 10px;
             border-radius: 10px;
             text-align: center;
             transition: transform 0.2s;
@@ -243,8 +298,8 @@
         }
 
         .metric-card.success-highlight {
-            background: #f0fdf4;
-            border-color: #bbf7d0;
+            background: var(--success-bg);
+            border-color: var(--success-border);
         }
 
         .metric-card.warning-highlight {
@@ -253,22 +308,26 @@
         }
 
         .metric-label {
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 0.72rem;
+            font-weight: 700;
             color: var(--gray-600);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .metric-value {
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-size: 1.35rem;
+            font-weight: 800;
             color: var(--primary);
-            margin: 6px 0 2px 0;
+            margin: 5px 0 2px 0;
+        }
+
+        .metric-card.success-highlight .metric-value {
+            color: var(--success);
         }
 
         .metric-unit {
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             color: var(--gray-600);
         }
 
@@ -276,12 +335,12 @@
         .alert-box {
             padding: 12px 16px;
             border-radius: 8px;
-            font-size: 0.85rem;
+            font-size: 0.84rem;
             margin-bottom: 16px;
             display: flex;
             align-items: flex-start;
             gap: 10px;
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         .alert-warning {
@@ -306,12 +365,12 @@
         .custom-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            font-size: 0.84rem;
             margin-top: 10px;
         }
 
         .custom-table th, .custom-table td {
-            padding: 10px 12px;
+            padding: 9px 12px;
             border-bottom: 1px solid var(--gray-200);
             text-align: left;
         }
@@ -322,17 +381,99 @@
             font-weight: 700;
         }
 
+        /* Visual Canvas */
+        .canvas-container {
+            position: relative;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+            margin-bottom: 16px;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .canvas-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 10px;
+            font-size: 0.78rem;
+            color: #e2e8f0;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+        }
+
+        /* External Resource Links */
+        .resource-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .resource-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 12px;
+            text-decoration: none;
+            color: var(--dark);
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .resource-card:hover {
+            border-color: var(--primary);
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+
+        .resource-card strong {
+            color: var(--primary);
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .resource-card span {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
         /* Memorial Output Box */
         .memorial-textarea {
             width: 100%;
-            height: 380px;
+            height: 420px;
             padding: 14px;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
             font-size: 0.82rem;
-            line-height: 1.4;
+            line-height: 1.45;
             border: 1.5px solid var(--gray-300);
             border-radius: 8px;
-            background: #fcfcfd;
+            background: #f8fafc;
             color: #0f172a;
             resize: vertical;
         }
@@ -341,7 +482,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 20px;
+            padding: 10px 18px;
             background: var(--primary);
             color: var(--white);
             font-weight: 600;
@@ -349,12 +490,12 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
         .btn-action:hover {
             background: var(--primary-light);
-            box-shadow: 0 4px 6px rgba(16, 52, 96, 0.25);
+            box-shadow: 0 4px 6px rgba(15, 43, 72, 0.25);
         }
 
         .btn-secondary {
@@ -365,18 +506,9 @@
             background: var(--secondary-hover);
         }
 
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 1.5px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--gray-100);
-        }
-
-        .print-only {
-            display: none;
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
         }
 
         @media print {
@@ -385,11 +517,8 @@
                 color: black;
                 padding: 0;
             }
-            .nav-tabs, .btn-action, .no-print {
+            .nav-tabs, .btn-action, .no-print, .resource-links-grid {
                 display: none !important;
-            }
-            .print-only {
-                display: block;
             }
             .card {
                 box-shadow: none;
@@ -404,11 +533,11 @@
     <header>
         <div class="header-content">
             <div class="header-title">
-                <h1>COLÉGIO ESTADUAL DO PARANÁ — CEP</h1>
-                <p>Curso Técnico em Edificações Integrado ao Ensino Médio | Prof. Eng. Lucas Pereira de Campos</p>
+                <h1><span>☀️</span> CALCULADORA SOLAR INTEGRADA</h1>
+                <p>Pré-Dimensionamento Técnico & Viabilidade Econômica para Edificações (Solar Térmico & Fotovoltaico)</p>
             </div>
             <div class="header-badge">
-                Calculadora Solar Integrada v2.0
+                Versão Parametrizada & Completa
             </div>
         </div>
     </header>
@@ -417,16 +546,16 @@
         <!-- Navigation Tabs -->
         <div class="nav-tabs no-print">
             <button class="tab-btn active" onclick="switchTab('tab-localizacao')">
-                <span>📍</span> 1. Localização & Radiação
+                <span>📍</span> 1. Localização & Carta Solar
             </button>
             <button class="tab-btn" onclick="switchTab('tab-termico')">
-                <span>🔥</span> 2. Aquecimento Solar
+                <span>🚿</span> 2. Aquecimento Solar Térmico
             </button>
             <button class="tab-btn" onclick="switchTab('tab-fotovoltaico')">
                 <span>⚡</span> 3. Solar Fotovoltaico
             </button>
             <button class="tab-btn" onclick="switchTab('tab-viabilidade')">
-                <span>💰</span> 4. Estudo de Viabilidade
+                <span>💰</span> 4. Viabilidade Econômica Comparada
             </button>
             <button class="tab-btn" onclick="switchTab('tab-memorial')">
                 <span>📋</span> 5. Memorial do Projeto
@@ -434,134 +563,182 @@
         </div>
 
         <!-- ================================================================= -->
-        <!-- ABA 1: LOCALIZAÇÃO E RADIAÇÃO SOLAR -->
+        <!-- ABA 1: LOCALIZAÇÃO, RADIAÇÃO & CARTA SOLAR VISUAL -->
         <!-- ================================================================= -->
         <div id="tab-localizacao" class="tab-content">
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
-                        <h2><span>🌐</span> Parâmetros do Terreno & Local</h2>
+                        <h2><span>🌐</span> Parâmetros da Edificação & Terreno</h2>
                         <span class="card-badge">Entrada de Dados</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="cidadeSelect">Selecione uma Cidade de Referência:</label>
+                        <label for="cidadeSelect">Selecione uma Cidade de Referência ou Personalize:</label>
                         <select id="cidadeSelect" class="form-control" onchange="selecionarCidade()">
-                            <option value="curitiba" selected>Curitiba - PR (Latitude: -25.43°, Longitude: 49.27°)</option>
-                            <option value="pontagrossa">Ponta Grossa - PR (Latitude: -25.09°, Longitude: 50.16°)</option>
-                            <option value="londrina">Londrina - PR (Latitude: -23.31°, Longitude: 51.16°)</option>
-                            <option value="maringa">Maringá - PR (Latitude: -23.42°, Longitude: 51.93°)</option>
-                            <option value="cascavel">Cascavel - PR (Latitude: -24.95°, Longitude: 53.45°)</option>
-                            <option value="foz">Foz do Iguaçu - PR (Latitude: -25.54°, Longitude: 54.58°)</option>
-                            <option value="paranagua">Paranaguá - PR (Latitude: -25.52°, Longitude: 48.51°)</option>
-                            <option value="engcoelho">Engenheiro Coelho - SP (Latitude: -22.49°, Longitude: 47.22°)</option>
-                            <option value="saopaulo">São Paulo - SP (Latitude: -23.55°, Longitude: 46.63°)</option>
-                            <option value="custom">Outra Cidade (Digitar Coordenadas)</option>
+                            <option value="curitiba" selected>Curitiba - PR (Lat: -25.43°, Lon: 49.27°, HSP: 4.20)</option>
+                            <option value="pontagrossa">Ponta Grossa - PR (Lat: -25.09°, Lon: 50.16°, HSP: 4.35)</option>
+                            <option value="londrina">Londrina - PR (Lat: -23.31°, Lon: 51.16°, HSP: 4.85)</option>
+                            <option value="maringa">Maringá - PR (Lat: -23.42°, Lon: 51.93°, HSP: 4.80)</option>
+                            <option value="cascavel">Cascavel - PR (Lat: -24.95°, Lon: 53.45°, HSP: 4.70)</option>
+                            <option value="foz">Foz do Iguaçu - PR (Lat: -25.54°, Lon: 54.58°, HSP: 4.75)</option>
+                            <option value="paranagua">Paranaguá - PR (Lat: -25.52°, Lon: 48.51°, HSP: 4.10)</option>
+                            <option value="engcoelho">Engenheiro Coelho - SP (Lat: -22.49°, Lon: 47.22°, HSP: 4.90)</option>
+                            <option value="saopaulo">São Paulo - SP (Lat: -23.55°, Lon: 46.63°, HSP: 4.30)</option>
+                            <option value="riodejaneiro">Rio de Janeiro - RJ (Lat: -22.90°, Lon: 43.17°, HSP: 4.70)</option>
+                            <option value="belohorizonte">Belo Horizonte - MG (Lat: -19.92°, Lon: 43.94°, HSP: 4.95)</option>
+                            <option value="brasilia">Brasília - DF (Lat: -15.79°, Lon: 47.88°, HSP: 5.30)</option>
+                            <option value="salvador">Salvador - BA (Lat: -12.97°, Lon: 38.51°, HSP: 5.40)</option>
+                            <option value="custom">✏️ Personalizado (Digitar Coordenadas & HSP Livre)</option>
                         </select>
-                        <small>Os dados solares serão calculados com base na física astronômica do Prof. Ítalo Ríspoli.</small>
+                        <small>Permite alterar qualquer coordenada e índice de irradiação solar.</small>
                     </div>
 
-                    <div class="input-row">
+                    <div class="input-row-3">
                         <div class="form-group">
-                            <label for="inputLatitude">Latitude (graus decimais):</label>
+                            <label for="inputLatitude">Latitude (° dec):</label>
                             <input type="number" id="inputLatitude" class="form-control" value="-25.43" step="0.01" oninput="recalcularTudo()">
-                            <small>Negativo no Hemisfério Sul (-).</small>
+                            <small>Negativo no Hem. Sul (-).</small>
                         </div>
                         <div class="form-group">
-                            <label for="inputLongitude">Longitude (graus decimais):</label>
+                            <label for="inputLongitude">Longitude (° dec):</label>
                             <input type="number" id="inputLongitude" class="form-control" value="49.27" step="0.01" oninput="recalcularTudo()">
                             <small>Meridiano local (° W).</small>
                         </div>
+                        <div class="form-group">
+                            <label for="inputHspManual">HSP Base (h/dia):</label>
+                            <input type="number" id="inputHspManual" class="form-control" value="4.20" step="0.05" min="2.0" max="7.5" oninput="recalcularTudo()">
+                            <small>Horas de Sol Pleno diárias.</small>
+                        </div>
                     </div>
 
                     <div class="input-row">
                         <div class="form-group">
-                            <label for="inputInclinacaoTelhado">Inclinação do Telhado (β):</label>
-                            <input type="number" id="inputInclinacaoTelhado" class="form-control" value="25" min="5" max="60" oninput="recalcularTudo()">
-                            <small>Em graus (ex: 20° a 30° = telha cerâmica).</small>
+                            <label for="inputInclinacaoTelhado">Inclinação do Telhado (β em graus):</label>
+                            <input type="number" id="inputInclinacaoTelhado" class="form-control" value="25" min="0" max="75" step="1" oninput="recalcularTudo()">
+                            <small>Ex: 20° a 30° = telha cerâmica; 10° = metálica/fibrocimento.</small>
                         </div>
                         <div class="form-group">
-                            <label for="inputAzimuteTelhado">Azimute da Cobertura (γ):</label>
-                            <select id="inputAzimuteTelhado" class="form-control" onchange="recalcularTudo()">
-                                <option value="0" selected>Norte Verdadeiro (0°) - Ideal (100%)</option>
-                                <option value="20">Nordeste leve (20°) - 97%</option>
-                                <option value="-20">Noroeste leve (-20°) - 97%</option>
-                                <option value="45">Nordeste / Leste (45°) - 90%</option>
-                                <option value="-45">Noroeste / Oeste (-45°) - 90%</option>
-                                <option value="90">Leste (90°) - 82%</option>
-                                <option value="-90">Oeste (-90°) - 82%</option>
-                                <option value="180">Sul (180°) - Inadequado (&lt;60%)</option>
-                            </select>
-                            <small>Medido com a régua do Google Earth.</small>
+                            <label for="inputAzimuteTelhado">Azimute da Cobertura (γ em graus):</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="number" id="inputAzimuteTelhado" class="form-control" value="0" min="-180" max="180" step="1" oninput="atualizarAzimuteDropdown(); recalcularTudo()">
+                                <select id="selectAzimutePreset" class="form-control" style="width: 140px;" onchange="aplicarAzimutePreset()">
+                                    <option value="0" selected>Norte (0°)</option>
+                                    <option value="45">Nordeste (45°)</option>
+                                    <option value="-45">Noroeste (-45°)</option>
+                                    <option value="90">Leste (90°)</option>
+                                    <option value="-90">Oeste (-90°)</option>
+                                    <option value="180">Sul (180°)</option>
+                                    <option value="custom">Manual...</option>
+                                </select>
+                            </div>
+                            <small>0° = Norte Verdadeiro (ideal no Hemisfério Sul). Negativo = Oeste.</small>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="inputAreaTelhadoNorte">Área de Telhado Livre Voltada ao Norte (m²):</label>
-                        <input type="number" id="inputAreaTelhadoNorte" class="form-control" value="38" min="5" max="300" oninput="recalcularTudo()">
-                        <small>Área desimpedida de sombra de platibandas e caixas d'água.</small>
+                    <div class="input-row">
+                        <div class="form-group">
+                            <label for="inputAreaTelhadoNorte">Área de Telhado Livre (m²):</label>
+                            <input type="number" id="inputAreaTelhadoNorte" class="form-control" value="40" min="5" max="1000" step="1" oninput="recalcularTudo()">
+                            <small>Área útil desimpedida de sombras de platibandas e chaminés.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputFatorPerdaSombra">Fator de Sombreamento / Horizonte (%):</label>
+                            <input type="number" id="inputFatorPerdaSombra" class="form-control" value="3" min="0" max="40" step="1" oninput="recalcularTudo()">
+                            <small>Perda por obstáculos no horizonte (árvores, prédios vizinhos).</small>
+                        </div>
+                    </div>
+
+                    <div class="alert-box alert-info">
+                        <div>
+                            <strong>🔗 Fontes & Bancos de Dados Oficiais de Radiação Solar:</strong>
+                            Consulte a irradiação exata do seu terreno nos links abaixo:
+                            <div class="resource-links-grid">
+                                <a href="http://www.cresesb.cepel.br/index.php?section=sundata" target="_blank" class="resource-card">
+                                    <strong><span>☀️</span> CRESESB / SunData</strong>
+                                    <span>Banco oficial do CEPEL com HSP de todos os municípios brasileiros.</span>
+                                </a>
+                                <a href="https://www.ufrgs.br/radiasol/" target="_blank" class="resource-card">
+                                    <strong><span>📐</span> RADIASOL (UFRGS)</strong>
+                                    <span>Software de simulação e cálculo da irradiação no plano inclinado.</span>
+                                </a>
+                                <a href="http://labren.ccst.inpe.br/atlas_3ed/" target="_blank" class="resource-card">
+                                    <strong><span>🗺️</span> Atlas Solar (INPE)</strong>
+                                    <span>Mapeamento solarimétrico via satélite do Brasil.</span>
+                                </a>
+                                <a href="https://earth.google.com/web/" target="_blank" class="resource-card">
+                                    <strong><span>🌍</span> Google Earth Web</strong>
+                                    <span>Meça a orientação do telhado e azimute com a ferramenta régua.</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Painel da Carta Solar e Métricas -->
                 <div class="card">
                     <div class="card-header">
-                        <h2><span>☀️</span> Potencial Solar Calculado</h2>
-                        <span class="card-badge">Física Sol-Terra</span>
+                        <h2><span>🧭</span> Carta Solar & Abóbada Celeste</h2>
+                        <span class="card-badge">Projeção Solar Interativa</span>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="cartaSolarCanvas" width="460" height="340"></canvas>
+                        <div class="canvas-legend">
+                            <div class="legend-item"><div class="legend-color" style="background: #ef4444;"></div> Solstício de Verão (21/Dez)</div>
+                            <div class="legend-item"><div class="legend-color" style="background: #eab308;"></div> Equinócios (21/Mar - 23/Set)</div>
+                            <div class="legend-item"><div class="legend-color" style="background: #3b82f6;"></div> Solstício de Inverno (21/Jun)</div>
+                            <div class="legend-item"><div class="legend-color" style="background: #10b981;"></div> Vetor do Telhado (β, γ)</div>
+                        </div>
                     </div>
 
                     <div class="metrics-grid">
                         <div class="metric-card highlight">
-                            <div class="metric-label">HSP Médio Diário</div>
+                            <div class="metric-label">HSP Efetivo</div>
                             <div class="metric-value" id="valHSP">4.20</div>
-                            <div class="metric-unit">horas de sol pleno/dia</div>
+                            <div class="metric-unit">h sol pleno/dia corrigido</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-label">Irradiação Média</div>
                             <div class="metric-value" id="valIrradiacao">4.20</div>
                             <div class="metric-unit">kWh/m² · dia</div>
                         </div>
-                        <div class="metric-card">
+                        <div class="metric-card success-highlight">
                             <div class="metric-label">Inclinação Térmica</div>
                             <div class="metric-value" id="valInclinacaoIdealTermico">35°</div>
                             <div class="metric-unit">|Latitude| + 10°</div>
                         </div>
-                        <div class="metric-card">
+                        <div class="metric-card highlight">
                             <div class="metric-label">Inclinação FV</div>
                             <div class="metric-value" id="valInclinacaoIdealFV">25°</div>
                             <div class="metric-unit">|Latitude|</div>
                         </div>
                     </div>
 
-                    <div class="alert-box alert-info">
-                        <div>
-                            <strong>Dica Construtiva:</strong> As Horas de Sol Pleno (HSP) representam a energia solar acumulada expressa como se o Sol brilhasse a 1000 W/m² fixos. No Paraná, a média gira entre <strong>4,0 e 4,6 HSP</strong>, garantindo alto potencial de geração.
-                        </div>
-                    </div>
-
                     <table class="custom-table">
                         <thead>
                             <tr>
-                                <th>Estação do Ano</th>
+                                <th>Estação Solar</th>
                                 <th>Declinação (δ)</th>
                                 <th>Duração do Dia (N)</th>
-                                <th>Altura do Sol ao Meio-Dia (α)</th>
+                                <th>Altura ao Meio-Dia (α)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Solstício de Verão (21/Dez)</td>
+                                <td><span style="color: #ef4444; font-weight: bold;">●</span> Solstício de Verão (21/Dez)</td>
                                 <td>-23.45°</td>
                                 <td id="valNVer">13.6 h</td>
                                 <td id="valAlfaVer">88.0°</td>
                             </tr>
                             <tr>
-                                <td>Equinócios (21/Mar - 23/Set)</td>
+                                <td><span style="color: #eab308; font-weight: bold;">●</span> Equinócios (21/Mar - 23/Set)</td>
                                 <td>0.00°</td>
                                 <td>12.0 h</td>
                                 <td id="valAlfaEqu">64.6°</td>
                             </tr>
                             <tr>
-                                <td>Solstício de Inverno (21/Jun)</td>
+                                <td><span style="color: #3b82f6; font-weight: bold;">●</span> Solstício de Inverno (21/Jun)</td>
                                 <td>+23.45°</td>
                                 <td id="valNInv">10.4 h</td>
                                 <td id="valAlfaInv">41.1°</td>
@@ -579,66 +756,152 @@
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
-                        <h2><span>🚿</span> Parâmetros da Residência (Água Quente)</h2>
-                        <span class="card-badge">NBR 15569 / NBR 5626</span>
+                        <h2><span>🚿</span> Demanda de Água Quente & Equipamentos</h2>
+                        <span class="card-badge">Parâmetros Customizáveis</span>
                     </div>
 
                     <div class="input-row">
                         <div class="form-group">
-                            <label for="numMoradores">Número de Moradores da Casa:</label>
-                            <input type="number" id="numMoradores" class="form-control" value="4" min="1" max="15" oninput="recalcularTudo()">
-                            <small>Habitantes permanentes do imóvel.</small>
+                            <label for="numMoradores">Número de Habitantes da Residência:</label>
+                            <input type="number" id="numMoradores" class="form-control" value="4" min="1" max="50" oninput="recalcularTudo()">
+                            <small>Moradores permanentes do imóvel.</small>
                         </div>
                         <div class="form-group">
-                            <label for="consumoPorPessoa">Consumo de Água Quente por Pessoa:</label>
-                            <select id="consumoPorPessoa" class="form-control" onchange="recalcularTudo()">
-                                <option value="35">35 L/dia (Uso Econômico)</option>
-                                <option value="40" selected>40 L/dia (Padrão Médio / 80 m²)</option>
-                                <option value="50">50 L/dia (Alto Conforto)</option>
-                                <option value="60">60 L/dia (Residência de Luxo)</option>
-                            </select>
-                            <small>Base de cálculo para banho a 50°C a 60°C.</small>
+                            <label for="consumoPorPessoa">Consumo Base de Banho por Pessoa (L/dia):</label>
+                            <input type="number" id="consumoPorPessoa" class="form-control" value="40" min="20" max="150" step="5" oninput="recalcularTudo()">
+                            <small>Média brasileira: 35L (econômico) a 50L (alto padrão).</small>
                         </div>
                     </div>
 
-                    <div class="input-row">
-                        <div class="form-group">
-                            <label for="pontosAdicionais">Pontos Extras de Água Quente:</label>
-                            <select id="pontosAdicionais" class="form-control" onchange="recalcularTudo()">
-                                <option value="0">Apenas Chuveiros (0 L)</option>
-                                <option value="20" selected>Pia da Cozinha (+20 L/dia)</option>
-                                <option value="40">Cozinha + Lavatórios (+40 L/dia)</option>
-                                <option value="60">Cozinha + Lavanderia (+60 L/dia)</option>
-                            </select>
-                            <small>Volume adicional somado ao total diário.</small>
+                    <!-- Detalhamento de Pontos Extras Personalizados -->
+                    <details class="details-box" open>
+                        <summary><span>➕</span> Pontos Extras de Água Quente (Personalizáveis)</summary>
+                        <div class="details-content">
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="pontoCozinhaL">Pia de Cozinha (L/dia):</label>
+                                    <input type="number" id="pontoCozinhaL" class="form-control" value="20" min="0" max="100" step="5" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pontoLavatorioL">Lavatórios dos Banheiros (L/dia):</label>
+                                    <input type="number" id="pontoLavatorioL" class="form-control" value="10" min="0" max="80" step="5" oninput="recalcularTudo()">
+                                </div>
+                            </div>
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="pontoBanheiraL">Banheira / Hidromassagem (L/dia):</label>
+                                    <input type="number" id="pontoBanheiraL" class="form-control" value="0" min="0" max="500" step="20" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pontoLavanderiaL">Lavanderia / Outros (L/dia):</label>
+                                    <input type="number" id="pontoLavanderiaL" class="form-control" value="0" min="0" max="200" step="10" oninput="recalcularTudo()">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="volumeManualBoiler">Sobrescrever Volume do Boiler (Livre se desejar):</label>
+                                <input type="number" id="volumeManualBoiler" class="form-control" placeholder="Deixe em branco para cálculo automático normativo" oninput="recalcularTudo()">
+                                <small>Se preenchido, define diretamente a capacidade nominal do reservatório térmico.</small>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="tempAguaFria">Temperatura da Água da Rede no Inverno (°C):</label>
-                            <input type="number" id="tempAguaFria" class="form-control" value="14" min="5" max="25" oninput="recalcularTudo()">
-                            <small>Curitiba/Sul: ~13°C a 15°C.</small>
+                    </details>
+
+                    <!-- Detalhamento Técnico das Placas Coletoras -->
+                    <details class="details-box" open>
+                        <summary><span>📐</span> Dimensões & Especificações das Placas Coletoras Térmicas</summary>
+                        <div class="details-content">
+                            <div class="form-group">
+                                <label for="presetPlacaTermica">Selecione o Modelo de Placa Coletora:</label>
+                                <select id="presetPlacaTermica" class="form-control" onchange="aplicarPresetPlacaTermica()">
+                                    <option value="2.00" selected>Comercial Padrão 1,00 m x 2,00 m (Área útil: 2,00 m²)</option>
+                                    <option value="1.50">Média 1,00 m x 1,50 m (Área útil: 1,50 m²)</option>
+                                    <option value="1.00">Compacta 1,00 m x 1,00 m (Área útil: 1,00 m²)</option>
+                                    <option value="2.40">Alta Performance 1,20 m x 2,00 m (Área útil: 2,40 m²)</option>
+                                    <option value="custom">✏️ Personalizado (Digitar Medidas Exatas)</option>
+                                </select>
+                            </div>
+
+                            <div class="input-row-3">
+                                <div class="form-group">
+                                    <label for="placaLarguraM">Largura (m):</label>
+                                    <input type="number" id="placaLarguraM" class="form-control" value="1.00" step="0.05" min="0.5" max="3.0" oninput="recalcularAreaPlacaTermica()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="placaComprimentoM">Comprimento (m):</label>
+                                    <input type="number" id="placaComprimentoM" class="form-control" value="2.00" step="0.05" min="0.5" max="3.5" oninput="recalcularAreaPlacaTermica()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="placaAreaUtilM2">Área Individual (m²):</label>
+                                    <input type="number" id="placaAreaUtilM2" class="form-control" value="2.00" step="0.01" min="0.5" max="10.0" oninput="recalcularTudo()">
+                                </div>
+                            </div>
+
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="eficienciaTermicaPlaca">Eficiência Térmica (η %):</label>
+                                    <input type="number" id="eficienciaTermicaPlaca" class="form-control" value="52" min="30" max="85" step="1" oninput="recalcularTudo()">
+                                    <small>Rendimento médio de placa plana com cobertura de vidro (NBR 15569).</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tempAguaFria">Temp. Água Fria Inverno (°C):</label>
+                                    <input type="number" id="tempAguaFria" class="form-control" value="14" min="5" max="25" step="1" oninput="recalcularTudo()">
+                                    <small>Sul: 12-15°C | Sudeste: 16-19°C | Nordeste: 22-25°C.</small>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </details>
 
                     <div class="form-group">
                         <label for="sistemaCirculacao">Tipo de Circulação Hidráulica:</label>
                         <select id="sistemaCirculacao" class="form-control" onchange="recalcularTudo()">
-                            <option value="termossifao" selected>Termossifão (Natural por Gravidade - Padrão)</option>
-                            <option value="bombeado">Circulação Forçada (Bomba + Controlador CDT)</option>
+                            <option value="termossifao" selected>Termossifão (Natural por Gravidade - Exige desnível h ≥ 30 cm)</option>
+                            <option value="bombeado">Circulação Forçada (Bomba de recirculação + Controlador Diferencial CDT)</option>
                         </select>
-                        <small>Termossifão exige desnível mínimo de 30 cm entre boiler e coletor.</small>
                     </div>
 
-                    <div class="alert-box alert-warning">
-                        <div>
-                            <strong>Atenção de Canteiro:</strong> É <strong>proibido o uso de PVC soldável marrom</strong> nas linhas de água quente solar! Especifique estritamente <strong>CPVC, Cobre ou PPR</strong>.
+                    <!-- Detalhamento de Custos Térmicos -->
+                    <details class="details-box" open>
+                        <summary><span>💲</span> Composição Detalhada dos Custos de Instalação Térmica</summary>
+                        <div class="details-content">
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="custoUnitPlacaTermica">Preço Unitário da Placa (R$/un):</label>
+                                    <input type="number" id="custoUnitPlacaTermica" class="form-control" value="950" step="50" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="custoBoilerInox">Preço do Boiler Inox (R$):</label>
+                                    <input type="number" id="custoBoilerInox" class="form-control" value="2100" step="100" oninput="recalcularTudo()">
+                                </div>
+                            </div>
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="custoTubulacaoTermica">Tubulações CPVC/Cobre + Isolamento (R$):</label>
+                                    <input type="number" id="custoTubulacaoTermica" class="form-control" value="650" step="50" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="custoValvulasAcessorios">Válvulas, Conexões e Fixação (R$):</label>
+                                    <input type="number" id="custoValvulasAcessorios" class="form-control" value="400" step="50" oninput="recalcularTudo()">
+                                </div>
+                            </div>
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="custoMaoDeObraTermica">Mão de Obra de Instalação Hidráulica (R$):</label>
+                                    <input type="number" id="custoMaoDeObraTermica" class="form-control" value="900" step="50" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="custosEscondidosTermico">Custos Indiretos / BDI / Contingência (%):</label>
+                                    <input type="number" id="custosEscondidosTermico" class="form-control" value="10" min="0" max="40" step="1" oninput="recalcularTudo()">
+                                    <small>Margem para frete, adaptações de telhado e imprevistos.</small>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </details>
                 </div>
 
+                <!-- Resultados Térmicos -->
                 <div class="card">
                     <div class="card-header">
-                        <h2><span>📊</span> Dimensionamento Térmico</h2>
-                        <span class="card-badge">Resultados Executivos</span>
+                        <h2><span>📊</span> Dimensionamento Executivo Térmico</h2>
+                        <span class="card-badge">NBR 15569 / NBR 5626</span>
                     </div>
 
                     <div class="metrics-grid">
@@ -649,44 +912,76 @@
                         </div>
                         <div class="metric-card highlight">
                             <div class="metric-label">Área de Coletores</div>
-                            <div class="metric-value" id="valAreaColetores">3.9 m²</div>
-                            <div class="metric-unit">Área de captação necessária</div>
+                            <div class="metric-value" id="valAreaColetores">3.8 m²</div>
+                            <div class="metric-unit">Captação necessária</div>
                         </div>
                         <div class="metric-card warning-highlight">
-                            <div class="metric-label">Placas Comerciais</div>
+                            <div class="metric-label">Qtd. de Placas</div>
                             <div class="metric-value" id="valQtdPlacasTermicas">2 un</div>
-                            <div class="metric-unit">Placas de 2,00 m² (1x2m)</div>
+                            <div class="metric-unit" id="valDescPlacaTermica">de 2,00 m²</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-label">Peso Estrutural</div>
-                            <div class="metric-value" id="valPesoBoilerCheio">260 kgf</div>
+                            <div class="metric-value" id="valPesoBoilerCheio">280 kgf</div>
                             <div class="metric-unit">Boiler cheio + placas</div>
+                        </div>
+                    </div>
+
+                    <!-- Resumo Financeiro Padronizado -->
+                    <div class="metrics-grid">
+                        <div class="metric-card highlight">
+                            <div class="metric-label">Investimento Total</div>
+                            <div class="metric-value" id="valInvestimentoTermicoCard">R$ 5.500</div>
+                            <div class="metric-unit">Com equipamentos e serviços</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Economia Mensal</div>
+                            <div class="metric-value" id="valEcoMensalTermicoCard">R$ 152</div>
+                            <div class="metric-unit">Substituição do chuveiro</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Economia Anual</div>
+                            <div class="metric-value" id="valEcoAnualTermicoCard">R$ 1.824</div>
+                            <div class="metric-unit">Por ano evitado</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Payback Simples</div>
+                            <div class="metric-value" id="valPaybackTermicoCard">3.0 anos</div>
+                            <div class="metric-unit" id="valPaybackTermicoMeses">3 anos e 0 meses</div>
                         </div>
                     </div>
 
                     <table class="custom-table">
                         <thead>
                             <tr>
-                                <th>Item de Instalação</th>
-                                <th>Especificação Construtiva</th>
+                                <th>Diretriz de Canteiro / Projeto</th>
+                                <th>Especificação Construtiva Obrigatória</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Desnível Vertical Obrigatório</td>
-                                <td><strong id="valDesnivelRecomendado">h ≥ 30 cm (Fundo do boiler acima do topo da placa)</strong></td>
+                                <td><strong id="valDesnivelRecomendado">h ≥ 30 cm (Base do boiler acima do topo das placas)</strong></td>
                             </tr>
                             <tr>
-                                <td>Diâmetro Mínimo da Tubulação</td>
-                                <td><strong id="valDiametroTubulacao">CPVC Ø 22 mm (3/4") ou Cobre 22 mm</strong></td>
+                                <td>Material das Tubulações</td>
+                                <td><strong>CPVC Aquatherm, Cobre Classe A/E ou PPR (PROIBIDO PVC MARROM)</strong></td>
                             </tr>
                             <tr>
-                                <td>Isolamento das Linhas Aparentes</td>
-                                <td>Coquilha de espuma elastomérica de 13 mm com proteção UV</td>
+                                <td>Isolamento Térmico</td>
+                                <td>Coquilha de espuma elastomérica de 13 mm protegida contra intempéries</td>
                             </tr>
                             <tr>
                                 <td>Válvulas Obrigatórias</td>
-                                <td>Quebra-vácuo, segurança (pressão/temp) e misturadora termostática</td>
+                                <td>Quebra-vácuo no topo, válvula de segurança e alívio, e misturadora</td>
+                            </tr>
+                            <tr>
+                                <td>Subtotal Equipamentos Térmicos</td>
+                                <td id="valSubtotalEquipTermico">R$ 4.100</td>
+                            </tr>
+                            <tr>
+                                <td>Subtotal Instalação & Custos Indiretos</td>
+                                <td id="valSubtotalServTermico">R$ 1.400</td>
                             </tr>
                         </tbody>
                     </table>
@@ -701,76 +996,152 @@
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
-                        <h2><span>⚡</span> Consumo Elétrico da Edificação</h2>
-                        <span class="card-badge">Conta de Luz</span>
+                        <h2><span>⚡</span> Consumo & Parâmetros dos Módulos</h2>
+                        <span class="card-badge">Entrada Customizável</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="consumoKwhMes">Consumo Médio Mensal da Família (kWh/mês):</label>
-                        <input type="number" id="consumoKwhMes" class="form-control" value="330" min="50" max="2000" oninput="recalcularTudo()">
-                        <small>Média dos últimos 12 meses da fatura de energia.</small>
+                        <label for="consumoKwhMes">Consumo Médio Mensal da Edificação (kWh/mês):</label>
+                        <input type="number" id="consumoKwhMes" class="form-control" value="350" min="30" max="50000" step="10" oninput="recalcularTudo()">
+                        <small>Média dos últimos 12 meses obtida na conta de luz.</small>
                     </div>
+
+                    <!-- Detalhamento de Módulos Fotovoltaicos -->
+                    <details class="details-box" open>
+                        <summary><span>📐</span> Parâmetros Técnicos & Físicos do Módulo Fotovoltaico</summary>
+                        <div class="details-content">
+                            <div class="form-group">
+                                <label for="presetModuloFV">Selecione o Módulo ou Personalize:</label>
+                                <select id="presetModuloFV" class="form-control" onchange="aplicarPresetModuloFV()">
+                                    <option value="450">Módulo 450 Wp (Área: 2.10 m² | 2.09 m x 1.04 m | 20.7%)</option>
+                                    <option value="550" selected>Módulo 550 Wp (Padrão Atual - 2.58 m² | 2.28 m x 1.13 m | 21.3%)</option>
+                                    <option value="600">Módulo 600 Wp (Área: 2.80 m² | 2.17 m x 1.30 m | 21.5%)</option>
+                                    <option value="665">Módulo 665 Wp (Área: 3.10 m² | 2.38 m x 1.30 m | 21.6%)</option>
+                                    <option value="custom">✏️ Personalizado (Definir Dimensões e Parâmetros Elétricos Livres)</option>
+                                </select>
+                            </div>
+
+                            <div class="input-row-3">
+                                <div class="form-group">
+                                    <label for="moduloPotenciaWp">Potência Nominal (Wp):</label>
+                                    <input type="number" id="moduloPotenciaWp" class="form-control" value="550" step="5" min="100" max="800" oninput="recalcularAreaModuloFV()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="moduloComprimentoM">Comprimento (m):</label>
+                                    <input type="number" id="moduloComprimentoM" class="form-control" value="2.28" step="0.01" min="0.8" max="3.0" oninput="recalcularAreaModuloFV()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="moduloLarguraM">Largura (m):</label>
+                                    <input type="number" id="moduloLarguraM" class="form-control" value="1.13" step="0.01" min="0.5" max="2.0" oninput="recalcularAreaModuloFV()">
+                                </div>
+                            </div>
+
+                            <div class="input-row-3">
+                                <div class="form-group">
+                                    <label for="moduloAreaUtilM2">Área por Módulo (m²):</label>
+                                    <input type="number" id="moduloAreaUtilM2" class="form-control" value="2.58" step="0.01" min="0.5" max="5.0" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="moduloEficienciaPerc">Eficiência (%):</label>
+                                    <input type="number" id="moduloEficienciaPerc" class="form-control" value="21.3" step="0.1" min="14" max="26" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="moduloPesoKg">Peso por Placa (kg):</label>
+                                    <input type="number" id="moduloPesoKg" class="form-control" value="28.5" step="0.5" min="10" max="50" oninput="recalcularTudo()">
+                                </div>
+                            </div>
+
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="moduloVmp">Tensão Vmp (V):</label>
+                                    <input type="number" id="moduloVmp" class="form-control" value="41.95" step="0.1" min="20" max="60" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="moduloImp">Corrente Imp (A):</label>
+                                    <input type="number" id="moduloImp" class="form-control" value="13.12" step="0.1" min="5" max="25" oninput="recalcularTudo()">
+                                </div>
+                            </div>
+                        </div>
+                    </details>
 
                     <div class="input-row">
                         <div class="form-group">
-                            <label for="potenciaModulo">Potência do Módulo FV Comercial:</label>
-                            <select id="potenciaModulo" class="form-control" onchange="recalcularTudo()">
-                                <option value="450">450 Wp (Área: ~2,10 m²)</option>
-                                <option value="550" selected>550 Wp (Padrão Atual - 2,58 m²)</option>
-                                <option value="600">600 Wp (Área: ~2,80 m²)</option>
-                                <option value="665">665 Wp (Módulo Alta Potência - 3,10 m²)</option>
-                            </select>
-                            <small>Silício Monocristalino com tecnologia PERC/Bifacial.</small>
+                            <label for="performanceRatio">Taxa de Desempenho (PR - Performance Ratio):</label>
+                            <input type="number" id="performanceRatio" class="form-control" value="0.78" min="0.65" max="0.90" step="0.01" oninput="recalcularTudo()">
+                            <small>Padrão: 0.75 (com perdas e poeira) a 0.82 (ótimo).</small>
                         </div>
                         <div class="form-group">
-                            <label for="performanceRatio">Taxa de Desempenho (PR):</label>
-                            <select id="performanceRatio" class="form-control" onchange="recalcularTudo()">
-                                <option value="0.75">0.75 (Telhado com sombreamento leve)</option>
-                                <option value="0.78" selected>0.78 (Padrão Normativo Médio)</option>
-                                <option value="0.82">0.82 (Instalação ideal sem sombras)</option>
+                            <label for="tipoRedeEletrica">Padrão de Entrada da Concessionária:</label>
+                            <select id="tipoRedeEletrica" class="form-control" onchange="recalcularTudo()">
+                                <option value="monofasico">Monofásico (Custo de disponibilidade: 30 kWh/mês)</option>
+                                <option value="bifasico" selected>Bifásico (Custo de disponibilidade: 50 kWh/mês)</option>
+                                <option value="trifasico">Trifásico (Custo de disponibilidade: 100 kWh/mês)</option>
                             </select>
-                            <small>Desconta perdas por temperatura, poeira e cabos.</small>
+                            <small>Taxa mínima regulatória (Lei 14.300/2022).</small>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="tipoRedeEletrica">Padrão de Entrada da Concessionária:</label>
-                        <select id="tipoRedeEletrica" class="form-control" onchange="recalcularTudo()">
-                            <option value="monofasico">Monofásico (Custo de disp.: 30 kWh/mês)</option>
-                            <option value="bifasico" selected>Bifásico (Custo de disp.: 50 kWh/mês)</option>
-                            <option value="trifasico">Trifásico (Custo de disp.: 100 kWh/mês)</option>
-                        </select>
-                        <small>Taxa mínima cobrada pela rede pública (Lei 14.300/2022).</small>
-                    </div>
-
-                    <div class="alert-box alert-info">
-                        <div>
-                            <strong>Fronteira Técnica:</strong> O Técnico em Edificações faz o pré-dimensionamento, a análise de área de telhado, sobrecarga de peso e rota de eletrodutos. O projeto elétrico unifilar executivo e a homologação cabem ao responsável técnico eletricista.
+                    <!-- Detalhamento de Custos Fotovoltaicos -->
+                    <details class="details-box" open>
+                        <summary><span>💲</span> Composição Detalhada dos Custos do Sistema Fotovoltaico</summary>
+                        <div class="details-content">
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="custoUnitModuloFV">Preço do Módulo FV (R$/unidade):</label>
+                                    <input type="number" id="custoUnitModuloFV" class="form-control" value="550" step="20" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="custoInversorFV">Preço do Inversor On-Grid (R$):</label>
+                                    <input type="number" id="custoInversorFV" class="form-control" value="3800" step="100" oninput="recalcularTudo()">
+                                </div>
+                            </div>
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="custoEstruturaFixacaoFV">Estrutura de Fixação Alumínio (R$):</label>
+                                    <input type="number" id="custoEstruturaFixacaoFV" class="form-control" value="1200" step="50" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="custoCabosProtecaoFV">Cabos CC/CA, String Box e DPS (R$):</label>
+                                    <input type="number" id="custoCabosProtecaoFV" class="form-control" value="950" step="50" oninput="recalcularTudo()">
+                                </div>
+                            </div>
+                            <div class="input-row">
+                                <div class="form-group">
+                                    <label for="custoInstalacaoEngFV">Instalação, Projeto e ART Elétrica (R$):</label>
+                                    <input type="number" id="custoInstalacaoEngFV" class="form-control" value="2800" step="100" oninput="recalcularTudo()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="custosEscondidosFV">Custos Indiretos / BDI / Contingência (%):</label>
+                                    <input type="number" id="custosEscondidosFV" class="form-control" value="10" min="0" max="40" step="1" oninput="recalcularTudo()">
+                                    <small>Margem para frete, adequação de padrão de entrada e vistorias.</small>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </details>
                 </div>
 
+                <!-- Resultados Fotovoltaicos -->
                 <div class="card">
                     <div class="card-header">
-                        <h2><span>📐</span> Pré-Dimensionamento do Gerador FV</h2>
-                        <span class="card-badge">Resultados do Telhado</span>
+                        <h2><span>📐</span> Pré-Dimensionamento Executivo FV</h2>
+                        <span class="card-badge">NBR 16690 / Lei 14.300</span>
                     </div>
 
                     <div class="metrics-grid">
                         <div class="metric-card highlight">
-                            <div class="metric-label">Potência do Gerador</div>
-                            <div class="metric-value" id="valPotenciaPico">3.4 kWp</div>
-                            <div class="metric-unit">Potência de pico total</div>
+                            <div class="metric-label">Potência de Pico</div>
+                            <div class="metric-value" id="valPotenciaPico">3.85 kWp</div>
+                            <div class="metric-unit">Potência geradora total</div>
                         </div>
                         <div class="metric-card success-highlight">
-                            <div class="metric-label">Quantidade de Placas</div>
+                            <div class="metric-label">Qtd. de Módulos</div>
                             <div class="metric-value" id="valQtdModulos">7 un</div>
-                            <div class="metric-unit">Módulos de 550 Wp</div>
+                            <div class="metric-unit" id="valDescModuloFV">de 550 Wp</div>
                         </div>
                         <div class="metric-card warning-highlight">
                             <div class="metric-label">Área de Telhado</div>
                             <div class="metric-value" id="valAreaTelhadoNecessaria">18.1 m²</div>
-                            <div class="metric-unit">Área mínima livre ao Norte</div>
+                            <div class="metric-unit">Área líquida necessária</div>
                         </div>
                         <div class="metric-card">
                             <div class="metric-label">Geração Média</div>
@@ -779,31 +1150,59 @@
                         </div>
                     </div>
 
+                    <!-- Resumo Financeiro Padronizado -->
+                    <div class="metrics-grid">
+                        <div class="metric-card highlight">
+                            <div class="metric-label">Investimento Total</div>
+                            <div class="metric-value" id="valInvestimentoFVCard">R$ 13.860</div>
+                            <div class="metric-unit">Com equipamentos e serviços</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Economia Mensal</div>
+                            <div class="metric-value" id="valEcoMensalFVCard">R$ 295</div>
+                            <div class="metric-unit">Créditos de energia</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Economia Anual</div>
+                            <div class="metric-value" id="valEcoAnualFVCard">R$ 3.538</div>
+                            <div class="metric-unit">Abatimento anual</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Payback Simples</div>
+                            <div class="metric-value" id="valPaybackFVCard">3.9 anos</div>
+                            <div class="metric-unit" id="valPaybackFVMeses">3 anos e 11 meses</div>
+                        </div>
+                    </div>
+
                     <div id="alertaCompatibilidadeTelhado"></div>
 
                     <table class="custom-table">
                         <thead>
                             <tr>
-                                <th>Item Construtivo</th>
-                                <th>Diretriz de Projeto do Técnico</th>
+                                <th>Item Estrutural / Elétrico</th>
+                                <th>Diretriz de Projeto do Técnico em Edificações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Sobrecarga de Peso no Telhado</td>
-                                <td><strong id="valSobrecargaTelhado">~13 kgf/m² (Módulos + trilhos de alumínio)</strong></td>
+                                <td>Sobrecarga Estrutural no Telhado</td>
+                                <td><strong id="valSobrecargaTelhado">~13.5 kgf/m² (Módulos + perfis de fixação em alumínio)</strong></td>
                             </tr>
                             <tr>
                                 <td>Inversor Sugerido</td>
-                                <td><strong id="valInversorSugerido">Inversor Grid-Tie On-Grid 3,5 kW (220V)</strong></td>
+                                <td><strong id="valInversorSugerido">Inversor String On-Grid 3.6 kW a 4.0 kW (220V)</strong></td>
                             </tr>
                             <tr>
-                                <td>Local do Inversor</td>
-                                <td>Parede ventilada, protegida de sol e chuva, próxima ao QDG</td>
+                                <td>Tubulação de Descida CC</td>
+                                <td>Eletroduto de aço galvanizado a fogo Ø 1" ou PEAD de alta densidade embutido</td>
                             </tr>
                             <tr>
-                                <td>Eletroduto Descida CC</td>
-                                <td>Eletroduto rígido de aço galvanizado de Ø 1" ou PEAD embutido</td>
+                                <td>Subtotal Equipamentos FV</td>
+                                <td id="valSubtotalEquipFV">R$ 9.800</td>
+                            </tr>
+                            <tr>
+                                <td>Subtotal Instalação & Custos Indiretos</td>
+                                <td id="valSubtotalServFV">R$ 4.060</td>
                             </tr>
                         </tbody>
                     </table>
@@ -812,96 +1211,135 @@
         </div>
 
         <!-- ================================================================= -->
-        <!-- ABA 4: ESTUDO DE VIABILIDADE ECONÔMICA (NOVO!) -->
+        <!-- ABA 4: ESTUDO DE VIABILIDADE ECONÔMICA COMPARADA -->
         <!-- ================================================================= -->
         <div id="tab-viabilidade" class="tab-content" style="display: none;">
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
-                        <h2><span>💵</span> Parâmetros Financeiros & Tarifas</h2>
-                        <span class="card-badge">Custos e Tarifas</span>
+                        <h2><span>💵</span> Tarifas & Parâmetros de Consumo</h2>
+                        <span class="card-badge">Finanças da Edificação</span>
                     </div>
 
                     <div class="input-row">
                         <div class="form-group">
-                            <label for="tarifaEnergia">Tarifa de Energia (R$/kWh):</label>
-                            <input type="number" id="tarifaEnergia" class="form-control" value="0.88" step="0.01" min="0.30" max="2.00" oninput="recalcularTudo()">
-                            <small>Tarifa B1 residencial média com impostos (Copel: ~R$ 0,85 a 0,92).</small>
+                            <label for="tarifaEnergia">Tarifa de Energia da Concessionária (R$/kWh):</label>
+                            <input type="number" id="tarifaEnergia" class="form-control" value="0.88" step="0.01" min="0.30" max="3.00" oninput="recalcularTudo()">
+                            <small>Tarifa B1 residencial média com tributos (ICMS, PIS/COFINS).</small>
                         </div>
                         <div class="form-group">
-                            <label for="custoWpInstalado">Custo Médio FV Instalado (R$/Wp):</label>
-                            <input type="number" id="custoWpInstalado" class="form-control" value="3.10" step="0.10" min="2.00" max="6.00" oninput="recalcularTudo()">
-                            <small>Inclui placas, inversor, estrutura, cabos e instalação.</small>
+                            <label for="potenciaChuveiro">Potência do Chuveiro Substituído (W):</label>
+                            <input type="number" id="potenciaChuveiro" class="form-control" value="6500" step="500" min="3000" max="9000" oninput="recalcularTudo()">
+                            <small>Potência do chuveiro elétrico tradicional da residência.</small>
                         </div>
                     </div>
 
                     <div class="input-row">
                         <div class="form-group">
-                            <label for="custoSolarTermico">Custo Kit Solar Térmico Instalado (R$):</label>
-                            <input type="number" id="custoSolarTermico" class="form-control" value="4800" step="100" min="2000" max="20000" oninput="recalcularTudo()">
-                            <small>Boiler + 2 placas + tubulações CPVC + instalação.</small>
+                            <label for="tempoBanhoMinutos">Tempo Médio de Banho por Morador (minutos):</label>
+                            <input type="number" id="tempoBanhoMinutos" class="form-control" value="12" min="3" max="45" step="1" oninput="recalcularTudo()">
+                            <small>Duração média do banho diário de cada habitante.</small>
                         </div>
                         <div class="form-group">
-                            <label for="potenciaChuveiro">Potência do Chuveiro Elétrico Substituído (W):</label>
-                            <input type="number" id="potenciaChuveiro" class="form-control" value="6500" step="500" min="4000" max="8500" oninput="recalcularTudo()">
-                            <small>Média do chuveiro elétrico tradicional da família.</small>
+                            <label for="inflacaoTarifaEnergia">Reajuste Tarifário Anual Esperado (% a.a.):</label>
+                            <input type="number" id="inflacaoTarifaEnergia" class="form-control" value="6.5" min="0" max="20" step="0.5" oninput="recalcularTudo()">
+                            <small>Histórico médio de reajuste das distribuidoras de energia.</small>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="tempoBanhoMinutos">Tempo Médio de Banho por Pessoa (minutos):</label>
-                        <input type="number" id="tempoBanhoMinutos" class="form-control" value="12" min="5" max="30" oninput="recalcularTudo()">
-                        <small>Duração diária do banho de cada habitante.</small>
+                    <div class="alert-box alert-info">
+                        <div>
+                            <strong>💡 Metodologia Padronizada de Payback:</strong>
+                            Tanto o Aquecimento Solar Térmico quanto o Solar Fotovoltaico são avaliados sob as mesmas métricas financeiras: <strong>Investimento Total Inicial</strong>, <strong>Economia Mensal</strong>, <strong>Economia Anual</strong> e <strong>Payback Simples (em Anos e Meses)</strong>, garantindo total clareza na tomada de decisão do cliente ou do projeto integrador.
+                        </div>
                     </div>
                 </div>
 
+                <!-- Quadro Comparativo Padronizado Lado a Lado -->
                 <div class="card">
                     <div class="card-header">
-                        <h2><span>📈</span> Retorno do Investimento (Payback)</h2>
-                        <span class="card-badge">Análise Comparativa</span>
+                        <h2><span>📈</span> Comparativo Executivo de Viabilidade</h2>
+                        <span class="card-badge">Resultados Padronizados</span>
                     </div>
 
-                    <h3 style="font-size: 1rem; color: var(--primary); margin-bottom: 10px;">1. Sistema Solar Térmico (Aquecimento de Água)</h3>
-                    <div class="metrics-grid">
-                        <div class="metric-card success-highlight">
-                            <div class="metric-label">Economia Mensal</div>
-                            <div class="metric-value" id="valEcoMensalTermico">R$ 138</div>
-                            <div class="metric-unit">Na conta de luz</div>
-                        </div>
-                        <div class="metric-card success-highlight">
-                            <div class="metric-label">Economia Anual</div>
-                            <div class="metric-value" id="valEcoAnualTermico">R$ 1.656</div>
-                            <div class="metric-unit">Por ano evitado</div>
-                        </div>
-                        <div class="metric-card highlight">
-                            <div class="metric-label">Payback Simples</div>
-                            <div class="metric-value" id="valPaybackTermico">2.9 anos</div>
-                            <div class="metric-unit">Tempo de retorno do capital</div>
-                        </div>
-                    </div>
-
-                    <h3 style="font-size: 1rem; color: var(--primary); margin: 20px 0 10px 0;">2. Sistema Solar Fotovoltaico (Geração Elétrica)</h3>
+                    <!-- 1. Sistema Solar Térmico -->
+                    <h3 style="font-size: 0.95rem; color: var(--primary); margin-bottom: 8px;">🚿 1. Sistema Solar Térmico (Aquecimento de Água)</h3>
                     <div class="metrics-grid">
                         <div class="metric-card highlight">
                             <div class="metric-label">Investimento Total</div>
-                            <div class="metric-value" id="valInvestimentoFV">R$ 11.935</div>
-                            <div class="metric-unit">Sistema 3.85 kWp chave na mão</div>
+                            <div class="metric-value" id="valViabInvestTermico">R$ 5.500</div>
+                            <div class="metric-unit">Instalado chave na mão</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Economia Mensal</div>
+                            <div class="metric-value" id="valViabEcoMesTermico">R$ 152</div>
+                            <div class="metric-unit">Chuveiro substituído</div>
                         </div>
                         <div class="metric-card success-highlight">
                             <div class="metric-label">Economia Anual</div>
-                            <div class="metric-value" id="valEcoAnualFV">R$ 3.537</div>
-                            <div class="metric-unit">Abatimento na fatura</div>
+                            <div class="metric-value" id="valViabEcoAnoTermico">R$ 1.824</div>
+                            <div class="metric-unit">No ano 1</div>
                         </div>
-                        <div class="metric-card warning-highlight">
+                        <div class="metric-card success-highlight">
                             <div class="metric-label">Payback Simples</div>
-                            <div class="metric-value" id="valPaybackFV">3.4 anos</div>
-                            <div class="metric-unit">Tempo de retorno do capital</div>
+                            <div class="metric-value" id="valViabPaybackTermico">3.0 anos</div>
+                            <div class="metric-unit" id="valViabPaybackTermicoMeses">3 anos e 0 meses</div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Sistema Solar Fotovoltaico -->
+                    <h3 style="font-size: 0.95rem; color: var(--primary); margin: 18px 0 8px 0;">⚡ 2. Sistema Solar Fotovoltaico (Geração Elétrica)</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card highlight">
+                            <div class="metric-label">Investimento Total</div>
+                            <div class="metric-value" id="valViabInvestFV">R$ 13.860</div>
+                            <div class="metric-unit">Instalado chave na mão</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Economia Mensal</div>
+                            <div class="metric-value" id="valViabEcoMesFV">R$ 295</div>
+                            <div class="metric-unit">Créditos de energia</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Economia Anual</div>
+                            <div class="metric-value" id="valViabEcoAnoFV">R$ 3.538</div>
+                            <div class="metric-unit">No ano 1</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Payback Simples</div>
+                            <div class="metric-value" id="valViabPaybackFV">3.9 anos</div>
+                            <div class="metric-unit" id="valViabPaybackFVMeses">3 anos e 11 meses</div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Sistema Integrado (Térmico + Fotovoltaico) -->
+                    <h3 style="font-size: 0.95rem; color: #166534; margin: 18px 0 8px 0;">🌟 3. Sistema Híbrido Integrado (Térmico + Fotovoltaico)</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card highlight">
+                            <div class="metric-label">Investimento Total</div>
+                            <div class="metric-value" id="valViabInvestTotal">R$ 19.360</div>
+                            <div class="metric-unit">Solução completa</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Economia Mensal</div>
+                            <div class="metric-value" id="valViabEcoMesTotal">R$ 447</div>
+                            <div class="metric-unit">Economia combinada</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Economia Anual</div>
+                            <div class="metric-value" id="valViabEcoAnoTotal">R$ 5.362</div>
+                            <div class="metric-unit">Por ano no imóvel</div>
+                        </div>
+                        <div class="metric-card success-highlight">
+                            <div class="metric-label">Payback Ponderado</div>
+                            <div class="metric-value" id="valViabPaybackTotal">3.6 anos</div>
+                            <div class="metric-unit" id="valViabPaybackTotalMeses">3 anos e 7 meses</div>
                         </div>
                     </div>
 
                     <div class="alert-box alert-success" style="margin-top: 15px;">
                         <div>
-                            <strong>Conclusão da Viabilidade:</strong> Ambos os sistemas apresentam retorno do investimento (Payback) entre <strong>2,5 e 4 anos</strong>, muito abaixo da vida útil dos equipamentos (20 anos para o aquecedor solar e 25 anos para os módulos fotovoltaicos). O projeto é <strong>altamente viável e sustentável</strong>.
+                            <strong>Conclusão Técnica & Financeira:</strong> O tempo de retorno de ambos os sistemas (entre <strong>2,5 e 4,0 anos</strong>) é extremamente favorável em relação à vida útil projetada (20 anos para o aquecedor solar e 25 a 30 anos para os módulos fotovoltaicos).
                         </div>
                     </div>
                 </div>
@@ -909,12 +1347,12 @@
         </div>
 
         <!-- ================================================================= -->
-        <!-- ABA 5: MEMORIAL DESCRITIVO PRONTO -->
+        <!-- ABA 5: MEMORIAL DESCRITIVO EXECUTIVO PRONTO -->
         <!-- ================================================================= -->
         <div id="tab-memorial" class="tab-content" style="display: none;">
             <div class="card">
                 <div class="card-header">
-                    <h2><span>📝</span> Memorial de Pré-Dimensionamento Solar para o Projeto Integrador</h2>
+                    <h2><span>📝</span> Memorial de Pré-Dimensionamento Solar para Projetos de Edificações</h2>
                     <div>
                         <button class="btn-action btn-secondary" onclick="copiarMemorial()">
                             <span>📋</span> Copiar Memorial
@@ -927,7 +1365,7 @@
 
                 <div class="alert-box alert-info">
                     <div>
-                        Este texto foi formatado em conformidade com as normas da ABNT e a apostila do Colégio Estadual do Paraná. Você pode copiar o memorial abaixo e colar diretamente no seu memorial descritivo ou na prancha executiva de cobertura/instalações!
+                        Este memorial técnico padronizado reúne todas as especificações físicas, construtivas, elétricas e hidráulicas de acordo com as normas <strong>NBR 15569, NBR 16690, NBR 5626 e a Lei 14.300/2022</strong>. Pronto para ser inserido no relatório técnico ou prancha executiva do projeto!
                     </div>
                 </div>
 
@@ -939,7 +1377,7 @@
 
     <!-- SCRIPT DE CÁLCULO E DINÂMICA -->
     <script>
-        // Dados padrão das cidades pré-cadastradas
+        // Banco de dados padrão das cidades pré-cadastradas
         const dadosCidades = {
             curitiba: { lat: -25.43, lon: 49.27, hsp: 4.20, nome: "Curitiba - PR" },
             pontagrossa: { lat: -25.09, lon: 50.16, hsp: 4.35, nome: "Ponta Grossa - PR" },
@@ -949,14 +1387,23 @@
             foz: { lat: -25.54, lon: 54.58, hsp: 4.75, nome: "Foz do Iguaçu - PR" },
             paranagua: { lat: -25.52, lon: 48.51, hsp: 4.10, nome: "Paranaguá - PR" },
             engcoelho: { lat: -22.49, lon: 47.22, hsp: 4.90, nome: "Engenheiro Coelho - SP" },
-            saopaulo: { lat: -23.55, lon: 46.63, hsp: 4.30, nome: "São Paulo - SP" }
+            saopaulo: { lat: -23.55, lon: 46.63, hsp: 4.30, nome: "São Paulo - SP" },
+            riodejaneiro: { lat: -22.90, lon: 43.17, hsp: 4.70, nome: "Rio de Janeiro - RJ" },
+            belohorizonte: { lat: -19.92, lon: 43.94, hsp: 4.95, nome: "Belo Horizonte - MG" },
+            brasilia: { lat: -15.79, lon: 47.88, hsp: 5.30, nome: "Brasília - DF" },
+            salvador: { lat: -12.97, lon: 38.51, hsp: 5.40, nome: "Salvador - BA" }
         };
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).style.display = 'block';
-            event.currentTarget.classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+            if (tabId === 'tab-localizacao') {
+                desenharCartaSolar();
+            }
         }
 
         function selecionarCidade() {
@@ -965,75 +1412,170 @@
                 const c = dadosCidades[cidadeKey];
                 document.getElementById('inputLatitude').value = c.lat;
                 document.getElementById('inputLongitude').value = c.lon;
+                document.getElementById('inputHspManual').value = c.hsp.toFixed(2);
             }
             recalcularTudo();
         }
 
+        function aplicarAzimutePreset() {
+            const val = document.getElementById('selectAzimutePreset').value;
+            if (val !== 'custom') {
+                document.getElementById('inputAzimuteTelhado').value = val;
+            }
+            recalcularTudo();
+        }
+
+        function atualizarAzimuteDropdown() {
+            const az = parseFloat(document.getElementById('inputAzimuteTelhado').value) || 0;
+            const sel = document.getElementById('selectAzimutePreset');
+            const options = ['0', '45', '-45', '90', '-90', '180'];
+            if (options.includes(az.toString())) {
+                sel.value = az.toString();
+            } else {
+                sel.value = 'custom';
+            }
+        }
+
+        function aplicarPresetPlacaTermica() {
+            const val = document.getElementById('presetPlacaTermica').value;
+            if (val === '2.00') {
+                document.getElementById('placaLarguraM').value = '1.00';
+                document.getElementById('placaComprimentoM').value = '2.00';
+                document.getElementById('placaAreaUtilM2').value = '2.00';
+            } else if (val === '1.50') {
+                document.getElementById('placaLarguraM').value = '1.00';
+                document.getElementById('placaComprimentoM').value = '1.50';
+                document.getElementById('placaAreaUtilM2').value = '1.50';
+            } else if (val === '1.00') {
+                document.getElementById('placaLarguraM').value = '1.00';
+                document.getElementById('placaComprimentoM').value = '1.00';
+                document.getElementById('placaAreaUtilM2').value = '1.00';
+            } else if (val === '2.40') {
+                document.getElementById('placaLarguraM').value = '1.20';
+                document.getElementById('placaComprimentoM').value = '2.00';
+                document.getElementById('placaAreaUtilM2').value = '2.40';
+            }
+            recalcularTudo();
+        }
+
+        function recalcularAreaPlacaTermica() {
+            const l = parseFloat(document.getElementById('placaLarguraM').value) || 1.0;
+            const c = parseFloat(document.getElementById('placaComprimentoM').value) || 2.0;
+            const area = l * c;
+            document.getElementById('placaAreaUtilM2').value = area.toFixed(2);
+            document.getElementById('presetPlacaTermica').value = 'custom';
+            recalcularTudo();
+        }
+
+        function aplicarPresetModuloFV() {
+            const val = document.getElementById('presetModuloFV').value;
+            if (val === '450') {
+                document.getElementById('moduloPotenciaWp').value = '450';
+                document.getElementById('moduloComprimentoM').value = '2.09';
+                document.getElementById('moduloLarguraM').value = '1.04';
+                document.getElementById('moduloAreaUtilM2').value = '2.10';
+                document.getElementById('moduloEficienciaPerc').value = '20.7';
+                document.getElementById('moduloVmp').value = '41.5';
+                document.getElementById('moduloImp').value = '10.85';
+                document.getElementById('custoUnitModuloFV').value = '460';
+            } else if (val === '550') {
+                document.getElementById('moduloPotenciaWp').value = '550';
+                document.getElementById('moduloComprimentoM').value = '2.28';
+                document.getElementById('moduloLarguraM').value = '1.13';
+                document.getElementById('moduloAreaUtilM2').value = '2.58';
+                document.getElementById('moduloEficienciaPerc').value = '21.3';
+                document.getElementById('moduloVmp').value = '41.95';
+                document.getElementById('moduloImp').value = '13.12';
+                document.getElementById('custoUnitModuloFV').value = '550';
+            } else if (val === '600') {
+                document.getElementById('moduloPotenciaWp').value = '600';
+                document.getElementById('moduloComprimentoM').value = '2.17';
+                document.getElementById('moduloLarguraM').value = '1.30';
+                document.getElementById('moduloAreaUtilM2').value = '2.80';
+                document.getElementById('moduloEficienciaPerc').value = '21.5';
+                document.getElementById('moduloVmp').value = '34.6';
+                document.getElementById('moduloImp').value = '17.34';
+                document.getElementById('custoUnitModuloFV').value = '620';
+            } else if (val === '665') {
+                document.getElementById('moduloPotenciaWp').value = '665';
+                document.getElementById('moduloComprimentoM').value = '2.38';
+                document.getElementById('moduloLarguraM').value = '1.30';
+                document.getElementById('moduloAreaUtilM2').value = '3.10';
+                document.getElementById('moduloEficienciaPerc').value = '21.6';
+                document.getElementById('moduloVmp').value = '38.2';
+                document.getElementById('moduloImp').value = '17.41';
+                document.getElementById('custoUnitModuloFV').value = '720';
+            }
+            recalcularTudo();
+        }
+
+        function recalcularAreaModuloFV() {
+            const c = parseFloat(document.getElementById('moduloComprimentoM').value) || 2.28;
+            const l = parseFloat(document.getElementById('moduloLarguraM').value) || 1.13;
+            const pot = parseFloat(document.getElementById('moduloPotenciaWp').value) || 550;
+            const area = c * l;
+            document.getElementById('moduloAreaUtilM2').value = area.toFixed(2);
+            if (area > 0) {
+                const ef = (pot / (area * 1000)) * 100;
+                document.getElementById('moduloEficienciaPerc').value = ef.toFixed(1);
+            }
+            document.getElementById('presetModuloFV').value = 'custom';
+            recalcularTudo();
+        }
+
+        // Função utilitária para formatar anos e meses amigavelmente
+        function formatarAnosEMeses(anosDecimais) {
+            if (!isFinite(anosDecimais) || anosDecimais <= 0) return "Indeterminado";
+            const anos = Math.floor(anosDecimais);
+            const meses = Math.round((anosDecimais - anos) * 12);
+            if (meses === 12) {
+                return (anos + 1) + " anos e 0 meses";
+            }
+            return anos + (anos === 1 ? " ano" : " anos") + " e " + meses + (meses === 1 ? " mês" : " meses");
+        }
+
+        // =====================================================================
+        // MOTOR PRINCIPAL DE CÁLCULO REATIVO
+        // =====================================================================
         function recalcularTudo() {
-            // 1. Ler Parâmetros de Entrada
+            // 1. Localização e Física Solar
             const lat = parseFloat(document.getElementById('inputLatitude').value) || -25.43;
             const lon = parseFloat(document.getElementById('inputLongitude').value) || 49.27;
+            const hspManual = parseFloat(document.getElementById('inputHspManual').value) || 4.20;
             const inclTelhado = parseFloat(document.getElementById('inputInclinacaoTelhado').value) || 25;
             const azimute = parseFloat(document.getElementById('inputAzimuteTelhado').value) || 0;
-            const areaTelhadoDisponivel = parseFloat(document.getElementById('inputAreaTelhadoNorte').value) || 35;
+            const areaTelhadoDisponivel = parseFloat(document.getElementById('inputAreaTelhadoNorte').value) || 40;
+            const perdaSombra = (parseFloat(document.getElementById('inputFatorPerdaSombra').value) || 0) / 100;
 
-            // Térmico
-            const numMoradores = parseInt(document.getElementById('numMoradores').value) || 4;
-            const consumoUnit = parseFloat(document.getElementById('consumoPorPessoa').value) || 40;
-            const pontosExtras = parseFloat(document.getElementById('pontosAdicionais').value) || 20;
-            const tempFria = parseFloat(document.getElementById('tempAguaFria').value) || 14;
-            const sistemaCirc = document.getElementById('sistemaCirculacao').value;
+            // Fator de correção de azimute (curva de perda por desvio do Norte)
+            const desvioAzimutalAbs = Math.abs(azimute);
+            let fatorAzimute = 1.0;
+            if (desvioAzimutalAbs <= 15) {
+                fatorAzimute = 1.0 - (desvioAzimutalAbs / 15) * 0.02; // até 98%
+            } else if (desvioAzimutalAbs <= 45) {
+                fatorAzimute = 0.98 - ((desvioAzimutalAbs - 15) / 30) * 0.08; // 98% a 90%
+            } else if (desvioAzimutalAbs <= 90) {
+                fatorAzimute = 0.90 - ((desvioAzimutalAbs - 45) / 45) * 0.12; // 90% a 78%
+            } else {
+                fatorAzimute = 0.78 - ((desvioAzimutalAbs - 90) / 90) * 0.35; // 78% a 43%
+            }
+            if (fatorAzimute < 0.40) fatorAzimute = 0.40;
 
-            // Fotovoltaico
-            const consumoKwhMes = parseFloat(document.getElementById('consumoKwhMes').value) || 330;
-            const potModuloW = parseFloat(document.getElementById('potenciaModulo').value) || 550;
-            const pr = parseFloat(document.getElementById('performanceRatio').value) || 0.78;
-            const tipoRede = document.getElementById('tipoRedeEletrica').value;
+            const hspCorrigido = hspManual * fatorAzimute * (1 - perdaSombra);
 
-            // Viabilidade Econômica
-            const tarifaKwh = parseFloat(document.getElementById('tarifaEnergia').value) || 0.88;
-            const custoWp = parseFloat(document.getElementById('custoWpInstalado').value) || 3.10;
-            const custoSolarTermico = parseFloat(document.getElementById('custoSolarTermico').value) || 4800;
-            const potChuveiroW = parseFloat(document.getElementById('potenciaChuveiro').value) || 6500;
-            const tempoBanhoMin = parseFloat(document.getElementById('tempoBanhoMinutos').value) || 12;
-
-            // -------------------------------------------------------------
-            // CÁLCULOS ASTRONÔMICOS (PROF. ÍTALO RÍSPOLI)
-            // -------------------------------------------------------------
+            // Ângulos das estações solares
             const latAbs = Math.abs(lat);
             const rad = Math.PI / 180;
-            
-            // Fator de correção de azimute
-            let fatorAzimute = 1.0;
-            if (Math.abs(azimute) === 20) fatorAzimute = 0.97;
-            else if (Math.abs(azimute) === 45) fatorAzimute = 0.90;
-            else if (Math.abs(azimute) === 90) fatorAzimute = 0.82;
-            else if (Math.abs(azimute) === 180) fatorAzimute = 0.55;
-
-            // HSP base estimado pela latitude se for custom
-            let hspBase = 4.30 - (latAbs - 20) * 0.05;
-            if (hspBase < 3.8) hspBase = 3.8;
-            if (hspBase > 5.2) hspBase = 5.2;
-
-            // Se for cidade conhecida, puxa o valor oficial do Atlas/CRESESB
-            const cidadeSelectKey = document.getElementById('cidadeSelect').value;
-            if (cidadeSelectKey !== 'custom' && dadosCidades[cidadeSelectKey]) {
-                hspBase = dadosCidades[cidadeSelectKey].hsp;
-            }
-
-            const hspCorrigido = hspBase * fatorAzimute;
-
-            // Declinações das estações
             const deltaVer = -23.45;
             const deltaEqu = 0.00;
             const deltaInv = +23.45;
 
-            // Ângulo de altura do Sol ao meio-dia: alfa = 90 - (|lat - delta|)
+            // Alturas solares ao meio-dia
             const alfaVer = 90 - Math.abs(lat - deltaVer);
             const alfaEqu = 90 - Math.abs(lat - deltaEqu);
             const alfaInv = 90 - Math.abs(lat - deltaInv);
 
-            // Duração do dia N = (2 / 15) * arccos(-tan(lat) * tan(delta))
+            // Duração do dia solar
             function calcN(deltaDeg) {
                 const arg = -Math.tan(lat * rad) * Math.tan(deltaDeg * rad);
                 if (arg < -1) return 24;
@@ -1050,210 +1592,455 @@
             document.getElementById('valIrradiacao').innerText = hspCorrigido.toFixed(2);
             document.getElementById('valInclinacaoIdealTermico').innerText = (Math.round(latAbs) + 10) + "°";
             document.getElementById('valInclinacaoIdealFV').innerText = Math.round(latAbs) + "°";
-
             document.getElementById('valAlfaVer').innerText = alfaVer.toFixed(1) + "°";
             document.getElementById('valAlfaEqu').innerText = alfaEqu.toFixed(1) + "°";
             document.getElementById('valAlfaInv').innerText = alfaInv.toFixed(1) + "°";
-
             document.getElementById('valNVer').innerText = nVer.toFixed(1) + " h";
             document.getElementById('valNInv').innerText = nInv.toFixed(1) + " h";
 
-            // -------------------------------------------------------------
-            // CÁLCULOS TÉRMICOS (NBR 15569)
-            // -------------------------------------------------------------
-            const volumeNecessarioLitros = (numMoradores * consumoUnit) + pontosExtras;
-            
-            // Escolher boiler comercial superior mais próximo: 200, 300, 400, 500, 600, 800, 1000
-            const boilersComerciais = [200, 250, 300, 400, 500, 600, 800, 1000];
-            let boilerEscolhido = 200;
-            for (let b of boilersComerciais) {
-                if (b >= volumeNecessarioLitros) {
-                    boilerEscolhido = b;
-                    break;
-                }
-            }
-            if (volumeNecessarioLitros > 1000) boilerEscolhido = Math.ceil(volumeNecessarioLitros / 100) * 100;
+            // -----------------------------------------------------------------
+            // 2. DIMENSIONAMENTO TÉRMICO (NBR 15569)
+            // -----------------------------------------------------------------
+            const numMoradores = parseInt(document.getElementById('numMoradores').value) || 4;
+            const consumoUnit = parseFloat(document.getElementById('consumoPorPessoa').value) || 40;
+            const pCozinha = parseFloat(document.getElementById('pontoCozinhaL').value) || 0;
+            const pLavatorio = parseFloat(document.getElementById('pontoLavatorioL').value) || 0;
+            const pBanheira = parseFloat(document.getElementById('pontoBanheiraL').value) || 0;
+            const pLavanderia = parseFloat(document.getElementById('pontoLavanderiaL').value) || 0;
+            const volBoilerManual = parseFloat(document.getElementById('volumeManualBoiler').value) || 0;
 
-            // Energia térmica: Q = m * c * DeltaT
-            const tempQuente = 55; // Padrão NBR 15569
-            const deltaT = tempQuente - tempFria;
-            const qKcal = volumeNecessarioLitros * 1 * deltaT;
+            const consumoCalculadoL = (numMoradores * consumoUnit) + pCozinha + pLavatorio + pBanheira + pLavanderia;
+
+            let boilerEscolhido = 200;
+            if (volBoilerManual > 0) {
+                boilerEscolhido = volBoilerManual;
+            } else {
+                const boilersComerciais = [200, 250, 300, 400, 500, 600, 800, 1000];
+                for (let b of boilersComerciais) {
+                    if (b >= consumoCalculadoL) {
+                        boilerEscolhido = b;
+                        break;
+                    }
+                }
+                if (consumoCalculadoL > 1000) boilerEscolhido = Math.ceil(consumoCalculadoL / 100) * 100;
+            }
+
+            const tempFria = parseFloat(document.getElementById('tempAguaFria').value) || 14;
+            const tempQuente = 55;
+            const deltaT = Math.max(10, tempQuente - tempFria);
+            const qKcal = boilerEscolhido * 1 * deltaT;
             const qKwh = qKcal / 860;
 
-            // Área de coletores: Ac = Q / (H * eta)
-            const etaTermico = 0.52; // Eficiência média de placa plana
+            const etaTermico = (parseFloat(document.getElementById('eficienciaTermicaPlaca').value) || 52) / 100;
             const areaColetoresNecessaria = qKwh / (hspCorrigido * etaTermico);
 
-            // Placas comerciais de 2,00 m² (1,00m x 2,00m)
-            const areaPlacaComercial = 2.00;
-            const qtdPlacasTermicas = Math.max(1, Math.ceil(areaColetoresNecessaria / areaPlacaComercial));
-            const areaInstaladaTermico = qtdPlacasTermicas * areaPlacaComercial;
+            const areaPlacaTermica = parseFloat(document.getElementById('placaAreaUtilM2').value) || 2.0;
+            const qtdPlacasTermicas = Math.max(1, Math.ceil(areaColetoresNecessaria / areaPlacaTermica));
+            const areaInstaladaTermico = qtdPlacasTermicas * areaPlacaTermica;
 
-            // Peso do boiler cheio de água
-            const pesoBoilerCheio = Math.round(boilerEscolhido * 1.15 + (qtdPlacasTermicas * 35));
+            const pesoBoilerCheio = Math.round((boilerEscolhido * 1.15) + (qtdPlacasTermicas * (areaPlacaTermica * 18)));
 
+            // Custos Térmicos
+            const custoUnitPlaca = parseFloat(document.getElementById('custoUnitPlacaTermica').value) || 950;
+            const custoBoiler = parseFloat(document.getElementById('custoBoilerInox').value) || 2100;
+            const custoTub = parseFloat(document.getElementById('custoTubulacaoTermica').value) || 650;
+            const custoValv = parseFloat(document.getElementById('custoValvulasAcessorios').value) || 400;
+            const custoMoTermica = parseFloat(document.getElementById('custoMaoDeObraTermica').value) || 900;
+            const percEscondidosTermico = (parseFloat(document.getElementById('custosEscondidosTermico').value) || 10) / 100;
+
+            const subtotalEquipTermico = (qtdPlacasTermicas * custoUnitPlaca) + custoBoiler + custoTub + custoValv;
+            const subtotalServTermico = custoMoTermica + ((subtotalEquipTermico + custoMoTermica) * percEscondidosTermico);
+            const investimentoTotalTermico = subtotalEquipTermico + subtotalServTermico;
+
+            // Atualizar UI Térmica
             document.getElementById('valBoilerVol').innerText = boilerEscolhido + " L";
             document.getElementById('valAreaColetores').innerText = areaColetoresNecessaria.toFixed(1) + " m²";
             document.getElementById('valQtdPlacasTermicas').innerText = qtdPlacasTermicas + " un";
+            document.getElementById('valDescPlacaTermica').innerText = "de " + areaPlacaTermica.toFixed(2) + " m²";
             document.getElementById('valPesoBoilerCheio').innerText = pesoBoilerCheio + " kgf";
+            document.getElementById('valSubtotalEquipTermico').innerText = "R$ " + Math.round(subtotalEquipTermico).toLocaleString('pt-BR');
+            document.getElementById('valSubtotalServTermico').innerText = "R$ " + Math.round(subtotalServTermico).toLocaleString('pt-BR');
 
-            // -------------------------------------------------------------
-            // CÁLCULOS FOTOVOLTAICOS (NBR 16690)
-            // -------------------------------------------------------------
+            // -----------------------------------------------------------------
+            // 3. DIMENSIONAMENTO FOTOVOLTAICO (NBR 16690)
+            // -----------------------------------------------------------------
+            const consumoKwhMes = parseFloat(document.getElementById('consumoKwhMes').value) || 350;
+            const potModuloW = parseFloat(document.getElementById('moduloPotenciaWp').value) || 550;
+            const pr = parseFloat(document.getElementById('performanceRatio').value) || 0.78;
+            const tipoRede = document.getElementById('tipoRedeEletrica').value;
+            const areaUnitModulo = parseFloat(document.getElementById('moduloAreaUtilM2').value) || 2.58;
+            const pesoUnitModulo = parseFloat(document.getElementById('moduloPesoKg').value) || 28.5;
+
             const consumoDiarioKwh = consumoKwhMes / 30;
-            const potenciaPicoKwp = consumoDiarioKwh / (hspCorrigido * pr);
-            const potenciaPicoWp = potenciaPicoKwp * 1000;
+            const potenciaPicoNecessariaKwp = consumoDiarioKwh / (hspCorrigido * pr);
+            const potenciaPicoNecessariaWp = potenciaPicoNecessariaKwp * 1000;
 
-            const qtdModulos = Math.ceil(potenciaPicoWp / potModuloW);
+            const qtdModulos = Math.max(1, Math.ceil(potenciaPicoNecessariaWp / potModuloW));
             const potenciaRealInstaladaKwp = (qtdModulos * potModuloW) / 1000;
-
-            // Área do módulo
-            let areaUnitModulo = 2.58; // 550W
-            if (potModuloW <= 460) areaUnitModulo = 2.10;
-            else if (potModuloW >= 600 && potModuloW < 650) areaUnitModulo = 2.80;
-            else if (potModuloW >= 650) areaUnitModulo = 3.10;
-
             const areaTelhadoFV = qtdModulos * areaUnitModulo;
             const geracaoMensalKwh = potenciaRealInstaladaKwp * hspCorrigido * pr * 30;
 
+            // Sobrecarga estrutural
+            const pesoTotalModulosKg = qtdModulos * (pesoUnitModulo + 5);
+            const sobrecargaFVkgfM2 = (pesoTotalModulosKg / areaTelhadoFV).toFixed(1);
+
+            // Inversor Sugerido
+            let invSug = "Inversor String On-Grid 3.0 kW (220V)";
+            if (potenciaRealInstaladaKwp > 3.2 && potenciaRealInstaladaKwp <= 4.5) invSug = "Inversor String On-Grid 3.6 kW a 4.0 kW (220V)";
+            else if (potenciaRealInstaladaKwp > 4.5 && potenciaRealInstaladaKwp <= 6.0) invSug = "Inversor String On-Grid 5.0 kW a 6.0 kW (220V)";
+            else if (potenciaRealInstaladaKwp > 6.0) invSug = "Inversor String On-Grid " + (Math.ceil(potenciaRealInstaladaKwp * 1.1)) + " kW";
+
+            // Custos Fotovoltaicos
+            const custoUnitModulo = parseFloat(document.getElementById('custoUnitModuloFV').value) || 550;
+            const custoInversor = parseFloat(document.getElementById('custoInversorFV').value) || 3800;
+            const custoEstrutura = parseFloat(document.getElementById('custoEstruturaFixacaoFV').value) || 1200;
+            const custoCabos = parseFloat(document.getElementById('custoCabosProtecaoFV').value) || 950;
+            const custoInstalacaoEng = parseFloat(document.getElementById('custoInstalacaoEngFV').value) || 2800;
+            const percEscondidosFV = (parseFloat(document.getElementById('custosEscondidosFV').value) || 10) / 100;
+
+            const subtotalEquipFV = (qtdModulos * custoUnitModulo) + custoInversor + custoEstrutura + custoCabos;
+            const subtotalServFV = custoInstalacaoEng + ((subtotalEquipFV + custoInstalacaoEng) * percEscondidosFV);
+            const investimentoTotalFV = subtotalEquipFV + subtotalServFV;
+
+            // Atualizar UI Fotovoltaica
             document.getElementById('valPotenciaPico').innerText = potenciaRealInstaladaKwp.toFixed(2) + " kWp";
             document.getElementById('valQtdModulos').innerText = qtdModulos + " un";
+            document.getElementById('valDescModuloFV').innerText = "de " + Math.round(potModuloW) + " Wp";
             document.getElementById('valAreaTelhadoNecessaria').innerText = areaTelhadoFV.toFixed(1) + " m²";
             document.getElementById('valGeracaoMensalKwh').innerText = Math.round(geracaoMensalKwh) + " kWh";
+            document.getElementById('valSobrecargaTelhado').innerText = "~" + sobrecargaFVkgfM2 + " kgf/m² (Módulos + trilhos de alumínio)";
+            document.getElementById('valInversorSugerido').innerText = invSug;
+            document.getElementById('valSubtotalEquipFV').innerText = "R$ " + Math.round(subtotalEquipFV).toLocaleString('pt-BR');
+            document.getElementById('valSubtotalServFV').innerText = "R$ " + Math.round(subtotalServFV).toLocaleString('pt-BR');
 
-            // Validação de Área do Telhado
+            // Validação da Cobertura Norte
             const alertAreaDiv = document.getElementById('alertaCompatibilidadeTelhado');
             if (areaTelhadoFV > areaTelhadoDisponivel) {
                 alertAreaDiv.innerHTML = `
                     <div class="alert-box alert-warning">
-                        <strong>⚠️ Alerta de Espaço na Cobertura:</strong> A área necessária (${areaTelhadoFV.toFixed(1)} m²) é maior do que a área de telhado voltada ao Norte disponível (${areaTelhadoDisponivel.toFixed(1)} m²). Recomenda-se usar módulos de maior potência (ex: 600W/665W) ou complementar na água Leste/Oeste.
+                        <strong>⚠️ Alerta de Espaço na Cobertura:</strong> A área necessária (${areaTelhadoFV.toFixed(1)} m²) é maior do que a área livre disponível voltada ao Norte (${areaTelhadoDisponivel.toFixed(1)} m²). Sugestão: utilize módulos de maior potência (ex: 600W/665W) ou distribua o restante nas águas Leste ou Oeste.
                     </div>
                 `;
             } else {
                 alertAreaDiv.innerHTML = `
                     <div class="alert-box alert-success">
-                        <strong>✅ Telhado Compatível:</strong> Os módulos ocuparão ${(areaTelhadoFV/areaTelhadoDisponivel*100).toFixed(0)}% da água Norte disponível (${areaTelhadoFV.toFixed(1)} m² de ${areaTelhadoDisponivel.toFixed(1)} m²), permitindo folgas de beiral e manutenção segura.
+                        <strong>✅ Telhado 100% Compatível:</strong> Os módulos ocuparão ${(areaTelhadoFV/areaTelhadoDisponivel*100).toFixed(0)}% da água Norte disponível (${areaTelhadoFV.toFixed(1)} m² de ${areaTelhadoDisponivel.toFixed(1)} m²), garantindo folgas seguras para beirais, calhas e manutenção.
                     </div>
                 `;
             }
 
-            // Inversor Sugerido
-            let invSug = "Inversor String On-Grid 3.0 kW (220V)";
-            if (potenciaRealInstaladaKwp > 3.2 && potenciaRealInstaladaKwp <= 4.2) invSug = "Inversor String On-Grid 3.6 kW a 4.0 kW (220V)";
-            else if (potenciaRealInstaladaKwp > 4.2 && potenciaRealInstaladaKwp <= 5.5) invSug = "Inversor String On-Grid 5.0 kW (220V)";
-            else if (potenciaRealInstaladaKwp > 5.5) invSug = "Inversor String On-Grid " + Math.ceil(potenciaRealInstaladaKwp) + " kW";
-            document.getElementById('valInversorSugerido').innerText = invSug;
+            // -----------------------------------------------------------------
+            // 4. ESTUDO DE VIABILIDADE ECONÔMICA COMPARADA (PADRONIZADA)
+            // -----------------------------------------------------------------
+            const tarifaKwh = parseFloat(document.getElementById('tarifaEnergia').value) || 0.88;
+            const potChuveiroW = parseFloat(document.getElementById('potenciaChuveiro').value) || 6500;
+            const tempoBanhoMin = parseFloat(document.getElementById('tempoBanhoMinutos').value) || 12;
 
-            // -------------------------------------------------------------
-            // ESTUDO DE VIABILIDADE ECONÔMICA (NOVO!)
-            // -------------------------------------------------------------
-            // 1. Térmico: Substituição do Chuveiro Elétrico
-            // Consumo mensal do chuveiro elétrico = (Potência em kW) * (tempo em h) * (moradores) * 30 dias
+            // A) Economia Térmica (Substituição de Chuveiro Elétrico)
             const horasBanhoDiaTotal = (numMoradores * tempoBanhoMin) / 60;
             const consumoMensalChuveiroKwh = (potChuveiroW / 1000) * horasBanhoDiaTotal * 30;
             const economiaMensalTermicoR$ = consumoMensalChuveiroKwh * tarifaKwh;
             const economiaAnualTermicoR$ = economiaMensalTermicoR$ * 12;
-            const paybackTermicoAnos = custoSolarTermico / economiaAnualTermicoR$;
+            const paybackTermicoAnos = economiaAnualTermicoR$ > 0 ? (investimentoTotalTermico / economiaAnualTermicoR$) : 0;
 
-            document.getElementById('valEcoMensalTermico').innerText = "R$ " + Math.round(economiaMensalTermicoR$);
-            document.getElementById('valEcoAnualTermico').innerText = "R$ " + Math.round(economiaAnualTermicoR$);
-            document.getElementById('valPaybackTermico').innerText = paybackTermicoAnos.toFixed(1) + " anos";
-
-            // 2. Fotovoltaico
-            const investimentoTotalFV = potenciaRealInstaladaKwp * 1000 * custoWp;
-            
-            // Abatimento respeitando custo de disponibilidade
-            let custoDisponibilidadeKwh = 50; // Bifásico padrão
+            // B) Economia Fotovoltaica (Geração de Créditos)
+            let custoDisponibilidadeKwh = 50;
             if (tipoRede === 'monofasico') custoDisponibilidadeKwh = 30;
             if (tipoRede === 'trifasico') custoDisponibilidadeKwh = 100;
 
-            const energiaCompensadaMensalKwh = Math.min(geracaoMensalKwh, consumoKwhMes - custoDisponibilidadeKwh);
-            const economiaMensalFVR$ = Math.max(0, energiaCompensadaMensalKwh) * tarifaKwh;
+            const energiaCompensadaMensalKwh = Math.max(0, Math.min(geracaoMensalKwh, consumoKwhMes - custoDisponibilidadeKwh));
+            const economiaMensalFVR$ = energiaCompensadaMensalKwh * tarifaKwh;
             const economiaAnualFVR$ = economiaMensalFVR$ * 12;
-            const paybackFVAnos = investimentoTotalFV / economiaAnualFVR$;
+            const paybackFVAnos = economiaAnualFVR$ > 0 ? (investimentoTotalFV / economiaAnualFVR$) : 0;
 
-            document.getElementById('valInvestimentoFV').innerText = "R$ " + Math.round(investimentoTotalFV).toLocaleString('pt-BR');
-            document.getElementById('valEcoAnualFV').innerText = "R$ " + Math.round(economiaAnualFVR$).toLocaleString('pt-BR');
-            document.getElementById('valPaybackFV').innerText = paybackFVAnos.toFixed(1) + " anos";
+            // C) Sistema Integrado Combinado
+            const investimentoCombinadoR$ = investimentoTotalTermico + investimentoTotalFV;
+            const economiaMensalCombinadaR$ = economiaMensalTermicoR$ + economiaMensalFVR$;
+            const economiaAnualCombinadaR$ = economiaAnualTermicoR$ + economiaAnualFVR$;
+            const paybackCombinadoAnos = economiaAnualCombinadaR$ > 0 ? (investimentoCombinadoR$ / economiaAnualCombinadaR$) : 0;
 
-            // -------------------------------------------------------------
-            // GERAÇÃO DO MEMORIAL DESCRITIVO
-            // -------------------------------------------------------------
+            // Atualização dos Cards Térmicos (Aba 2)
+            document.getElementById('valInvestimentoTermicoCard').innerText = "R$ " + Math.round(investimentoTotalTermico).toLocaleString('pt-BR');
+            document.getElementById('valEcoMensalTermicoCard').innerText = "R$ " + Math.round(economiaMensalTermicoR$).toLocaleString('pt-BR');
+            document.getElementById('valEcoAnualTermicoCard').innerText = "R$ " + Math.round(economiaAnualTermicoR$).toLocaleString('pt-BR');
+            document.getElementById('valPaybackTermicoCard').innerText = paybackTermicoAnos.toFixed(1) + " anos";
+            document.getElementById('valPaybackTermicoMeses').innerText = formatarAnosEMeses(paybackTermicoAnos);
+
+            // Atualização dos Cards Fotovoltaicos (Aba 3)
+            document.getElementById('valInvestimentoFVCard').innerText = "R$ " + Math.round(investimentoTotalFV).toLocaleString('pt-BR');
+            document.getElementById('valEcoMensalFVCard').innerText = "R$ " + Math.round(economiaMensalFVR$).toLocaleString('pt-BR');
+            document.getElementById('valEcoAnualFVCard').innerText = "R$ " + Math.round(economiaAnualFVR$).toLocaleString('pt-BR');
+            document.getElementById('valPaybackFVCard').innerText = paybackFVAnos.toFixed(1) + " anos";
+            document.getElementById('valPaybackFVMeses').innerText = formatarAnosEMeses(paybackFVAnos);
+
+            // Atualização do Quadro de Viabilidade (Aba 4)
+            document.getElementById('valViabInvestTermico').innerText = "R$ " + Math.round(investimentoTotalTermico).toLocaleString('pt-BR');
+            document.getElementById('valViabEcoMesTermico').innerText = "R$ " + Math.round(economiaMensalTermicoR$).toLocaleString('pt-BR');
+            document.getElementById('valViabEcoAnoTermico').innerText = "R$ " + Math.round(economiaAnualTermicoR$).toLocaleString('pt-BR');
+            document.getElementById('valViabPaybackTermico').innerText = paybackTermicoAnos.toFixed(1) + " anos";
+            document.getElementById('valViabPaybackTermicoMeses').innerText = formatarAnosEMeses(paybackTermicoAnos);
+
+            document.getElementById('valViabInvestFV').innerText = "R$ " + Math.round(investimentoTotalFV).toLocaleString('pt-BR');
+            document.getElementById('valViabEcoMesFV').innerText = "R$ " + Math.round(economiaMensalFVR$).toLocaleString('pt-BR');
+            document.getElementById('valViabEcoAnoFV').innerText = "R$ " + Math.round(economiaAnualFVR$).toLocaleString('pt-BR');
+            document.getElementById('valViabPaybackFV').innerText = paybackFVAnos.toFixed(1) + " anos";
+            document.getElementById('valViabPaybackFVMeses').innerText = formatarAnosEMeses(paybackFVAnos);
+
+            document.getElementById('valViabInvestTotal').innerText = "R$ " + Math.round(investimentoCombinadoR$).toLocaleString('pt-BR');
+            document.getElementById('valViabEcoMesTotal').innerText = "R$ " + Math.round(economiaMensalCombinadaR$).toLocaleString('pt-BR');
+            document.getElementById('valViabEcoAnoTotal').innerText = "R$ " + Math.round(economiaAnualCombinadaR$).toLocaleString('pt-BR');
+            document.getElementById('valViabPaybackTotal').innerText = paybackCombinadoAnos.toFixed(1) + " anos";
+            document.getElementById('valViabPaybackTotalMeses').innerText = formatarAnosEMeses(paybackCombinadoAnos);
+
+            // Redesenhar a Carta Solar
+            desenharCartaSolar();
+
+            // -----------------------------------------------------------------
+            // 5. GERAÇÃO DO MEMORIAL TÉCNICO DESCRITIVO
+            // -----------------------------------------------------------------
             gerarTextoMemorial({
                 cidade: document.getElementById('cidadeSelect').options[document.getElementById('cidadeSelect').selectedIndex].text,
                 lat: lat,
                 lon: lon,
                 hsp: hspCorrigido,
                 moradores: numMoradores,
+                consumoAguaTotal: consumoCalculadoL,
                 boiler: boilerEscolhido,
                 placasTermicas: qtdPlacasTermicas,
+                areaPlacaTermica: areaPlacaTermica,
                 areaTermica: areaInstaladaTermico,
                 pesoBoiler: pesoBoilerCheio,
-                desnivel: sistemaCirc === 'termossifao' ? "Mínimo h ≥ 30 cm (Boiler elevado acima das placas)" : "Bomba com controlador diferencial CDT",
+                desnivel: document.getElementById('sistemaCirculacao').value === 'termossifao' ? "Termossifão natural por gravidade (desnível mínimo h ≥ 30 cm)" : "Circulação forçada (bomba com controlador CDT)",
                 consumoKwh: consumoKwhMes,
                 potenciaFVKwp: potenciaRealInstaladaKwp,
                 modulosFV: qtdModulos,
                 potModuloW: potModuloW,
+                areaModuloFV: areaUnitModulo,
                 areaFV: areaTelhadoFV,
                 inversor: invSug,
                 inclinacao: inclTelhado,
-                azimuteNome: document.getElementById('inputAzimuteTelhado').options[document.getElementById('inputAzimuteTelhado').selectedIndex].text,
+                azimuteGraus: azimute,
+                azimuteNome: azimute === 0 ? "Norte Verdadeiro (0°)" : azimute + "° em relação ao Norte",
+                investimentoTermico: investimentoTotalTermico,
+                ecoTermicoMes: economiaMensalTermicoR$,
                 ecoTermicoAno: economiaAnualTermicoR$,
                 paybackTermico: paybackTermicoAnos,
                 investimentoFV: investimentoTotalFV,
+                ecoFVMes: economiaMensalFVR$,
                 ecoFVAno: economiaAnualFVR$,
-                paybackFV: paybackFVAnos
+                paybackFV: paybackFVAnos,
+                investimentoTotal: investimentoCombinadoR$,
+                ecoTotalMes: economiaMensalCombinadaR$,
+                ecoTotalAno: economiaAnualCombinadaR$,
+                paybackTotal: paybackCombinadoAnos
             });
         }
 
+        // =====================================================================
+        // DESENHO DA CARTA SOLAR / ABÓBADA CELESTE NO CANVAS
+        // =====================================================================
+        function desenharCartaSolar() {
+            const canvas = document.getElementById('cartaSolarCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            const cx = w / 2;
+            const cy = h / 2 + 10;
+            const r = Math.min(w, h) / 2 - 35;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Fundo da abóbada
+            ctx.fillStyle = '#0b1329';
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Círculos concêntricos de elevação (alturas solares: 0°, 30°, 60°)
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1;
+            [0.33, 0.66, 1.0].forEach((ratio, idx) => {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r * ratio, 0, 2 * Math.PI);
+                ctx.stroke();
+            });
+
+            // Eixos Cardeais (N, S, L, O)
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - r);
+            ctx.lineTo(cx, cy + r);
+            ctx.moveTo(cx - r, cy);
+            ctx.lineTo(cx + r, cy);
+            ctx.stroke();
+
+            // Rótulos Cardeais
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 12px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText('N (0°)', cx, cy - r - 4);
+            ctx.textBaseline = 'top';
+            ctx.fillText('S (180°)', cx, cy + r + 4);
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('L (90°)', cx + r + 6, cy);
+            ctx.textAlign = 'right';
+            ctx.fillText('O (-90°)', cx - r - 6, cy);
+
+            // Parâmetros astronômicos
+            const lat = parseFloat(document.getElementById('inputLatitude').value) || -25.43;
+            const rad = Math.PI / 180;
+            const latRad = lat * rad;
+
+            function polarToScreen(alfaDeg, azimuteDeg) {
+                if (alfaDeg < 0) return null;
+                const distRatio = (90 - alfaDeg) / 90;
+                const radius = r * distRatio;
+                const angleRad = (azimuteDeg - 90) * rad;
+                return {
+                    x: cx + radius * Math.cos(angleRad),
+                    y: cy + radius * Math.sin(angleRad)
+                };
+            }
+
+            function desenharTrajetoria(deltaDeg, cor, nome) {
+                const deltaRad = deltaDeg * rad;
+                ctx.strokeStyle = cor;
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                let started = false;
+
+                for (let hora = 5.0; hora <= 19.0; hora += 0.25) {
+                    const omega = (hora - 12) * 15 * rad;
+                    const sinAlfa = Math.sin(latRad) * Math.sin(deltaRad) + Math.cos(latRad) * Math.cos(deltaRad) * Math.cos(omega);
+                    if (sinAlfa > 0) {
+                        const alfa = Math.asin(sinAlfa) / rad;
+                        let cosGamma = (sinAlfa * Math.sin(latRad) - Math.sin(deltaRad)) / (Math.cos(alfa * rad) * Math.cos(latRad));
+                        if (cosGamma > 1) cosGamma = 1;
+                        if (cosGamma < -1) cosGamma = -1;
+                        let gamma = Math.acos(cosGamma) / rad;
+                        if (omega > 0) gamma = -gamma;
+
+                        const pt = polarToScreen(alfa, gamma);
+                        if (pt) {
+                            if (!started) {
+                                ctx.moveTo(pt.x, pt.y);
+                                started = true;
+                            } else {
+                                ctx.lineTo(pt.x, pt.y);
+                            }
+                        }
+                    }
+                }
+                ctx.stroke();
+
+                const alfaNoon = 90 - Math.abs(lat - deltaDeg);
+                const gammaNoon = lat < deltaDeg ? 180 : 0;
+                const ptNoon = polarToScreen(alfaNoon, gammaNoon);
+                if (ptNoon) {
+                    ctx.fillStyle = cor;
+                    ctx.beginPath();
+                    ctx.arc(ptNoon.x, ptNoon.y, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.font = '10px Segoe UI';
+                    ctx.fillStyle = '#ffffff';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('12h', ptNoon.x, ptNoon.y - 7);
+                }
+            }
+
+            desenharTrajetoria(-23.45, '#ef4444', 'Verão');
+            desenharTrajetoria(0.00, '#eab308', 'Equinócio');
+            desenharTrajetoria(+23.45, '#3b82f6', 'Inverno');
+
+            // Vetor de Orientação do Telhado (β e γ)
+            const inclTelhado = parseFloat(document.getElementById('inputInclinacaoTelhado').value) || 25;
+            const azTelhado = parseFloat(document.getElementById('inputAzimuteTelhado').value) || 0;
+            const distTelhado = r * (inclTelhado / 90);
+            const angTelhadoRad = (azTelhado - 90) * rad;
+            const tx = cx + distTelhado * Math.cos(angTelhadoRad);
+            const ty = cy + distTelhado * Math.sin(angTelhadoRad);
+
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(tx, ty);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#10b981';
+            ctx.beginPath();
+            ctx.arc(tx, ty, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 10px Segoe UI';
+            ctx.textAlign = 'left';
+            ctx.fillText(' Telhado (' + inclTelhado + '°, ' + azTelhado + '°)', tx + 6, ty);
+        }
+
+        // =====================================================================
+        // MEMORIAL DESCRITIVO AUTOMATIZADO
+        // =====================================================================
         function gerarTextoMemorial(d) {
             const memorial = 
 `================================================================================
-COLÉGIO ESTADUAL DO PARANÁ — CEP
-CURSO TÉCNICO EM EDIFICAÇÕES INTEGRADO AO ENSINO MÉDIO
-DISCIPLINA: MATERIAIS DE CONSTRUÇÃO E TÉCNICAS CONSTRUTIVAS
-PROF. ENG. LUCAS PEREIRA DE CAMPOS
+MEMORIAL DESCRITIVO DE ENGENHARIA SOLAR — PROJETO DE EDIFICAÇÃO
+Pré-Dimensionamento Técnico & Estudo de Viabilidade Econômica Integrada
+(Sistemas Solar Térmico de Água Quente e Gerador Fotovoltaico Conectado à Rede)
 ================================================================================
-MEMORIAL DESCRITIVO DE ENGENHARIA SOLAR (PROJETO INTEGRADOR)
-Residência Unifamiliar de 80 m²
 
-1. DADOS DE LOCALIZAÇÃO E RECURSO SOLAR
-- Localidade do Empreendimento: ${d.cidade}
+1. DADOS GERAIS DO EMPREENDIMENTO & RECURSO SOLAR
+- Localidade da Obra: ${d.cidade}
 - Coordenadas Geográficas: Latitude: ${d.lat}° | Longitude: ${d.lon}°
-- Horas de Sol Pleno (HSP Médio Diário): ${d.hsp.toFixed(2)} h/dia (CRESESB / Prof. Ítalo Ríspoli)
-- Orientação da Cobertura: ${d.azimuteNome}
-- Inclinação da Água do Telhado: ${d.inclinacao}° em relação à horizontal
+- Índice Solarimétrico Local (HSP Médio Diário): ${d.hsp.toFixed(2)} h de sol pleno/dia (CRESESB / LABSOLAR)
+- Orientação da Cobertura Principal: ${d.azimuteNome}
+- Inclinação da Água do Telhado: ${d.inclinacao}° em relação ao plano horizontal
 
 2. SISTEMA DE AQUECIMENTO SOLAR TÉRMICO DE ÁGUA (NBR 15569 / NBR 5626)
-- População de Projeto: ${d.moradores} habitantes permanentes
-- Reservatório Térmico (Boiler): Cilindro de ${d.boiler} Litros em Aço Inox AISI 304 com isolamento em Poliuretano
-- Área Total de Coleta Solar: ${d.areaTermica.toFixed(2)} m²
-- Coletores Solares Planos: ${d.placasTermicas} placas comerciais de 1,00 m x 2,00 m (2,00 m² cada)
-- Modo de Circulação Hidráulica: ${d.desnivel}
-- Tubulações Hidráulicas Normatizadas: CPVC ou Cobre Ø 22 mm (PROIBIDO PVC MARROM)
-- Válvulas de Segurança Obrigatórias: Válvula quebra-vácuo, alívio de pressão/temperatura e misturadora termostática
-- Sobrecarga Estrutural no Telhado: ${d.pesoBoiler} kgf concentrados (Prever reforço com vigas duplas sobre alvenaria estrutural)
+- População de Projeto Atendida: ${d.moradores} habitantes permanentes
+- Demanda Diária Total de Água Quente: ${d.consumoAguaTotal} Litros/dia (banhos + pontos complementares)
+- Reservatório Térmico (Boiler): Capacidade nominal de ${d.boiler} Litros em Aço Inox AISI 304 com isolamento em poliuretano expandido de 40 mm
+- Coletores Solares Planos: ${d.placasTermicas} placas coletoras de ${d.areaPlacaTermica.toFixed(2)} m² cada
+- Área Total Coletora Instalada: ${d.areaTermica.toFixed(2)} m²
+- Sistema de Circulação Hidráulica: ${d.desnivel}
+- Tubulações Hidráulicas Primárias e Secundárias: CPVC de alto impacto ou Cobre Classe A/E (RIGOROSAMENTE PROIBIDO O USO DE PVC MARROM)
+- Válvulas e Dispositivos de Proteção: Válvula quebra-vácuo no barrilete, válvula de segurança e alívio de pressão/temperatura e misturadora termostática
+- Sobrecarga Estrutural no Telhado: ${d.pesoBoiler} kgf concentrados (Prever reforço em vigas duplas sobre alvenaria estrutural)
 
-3. PRÉ-DIMENSIONAMENTO DO GERADOR SOLAR FOTOVOLTAICO (NBR 16690 / LEI 14.300)
-- Consumo Médio Mensal da Família: ${d.consumoKwh} kWh/mês
+3. GERADOR SOLAR FOTOVOLTAICO CONECTADO À REDE (NBR 16690 / LEI 14.300)
+- Consumo Médio Mensal Histórico: ${d.consumoKwh} kWh/mês
 - Potência de Pico Total Instalada: ${d.potenciaFVKwp.toFixed(2)} kWp
-- Quantidade de Módulos Fotovoltaicos: ${d.modulosFV} módulos de ${d.potModuloW} Wp (Silício Monocristalino)
-- Área Ocupada na Cobertura Norte: ${d.areaFV.toFixed(1)} m²
-- Sobrecarga Distribuída Estimada: ~13 kgf/m² (Módulos + Perfilados de fixação em alumínio)
+- Quantidade e Modelo dos Módulos: ${d.modulosFV} módulos fotovoltaicos de ${Math.round(d.potModuloW)} Wp (Silício Monocristalino Half-Cell)
+- Área Total Ocupada na Cobertura: ${d.areaFV.toFixed(1)} m² de área líquida
+- Sobrecarga Distribuída Estimada: ~13.5 kgf/m² (Módulos + trilhos e presilhas de fixação em alumínio anodizado)
 - Inversor de Conexão à Rede (On-Grid): ${d.inversor}
-- Infraestrutura de Eletrodutos: Eletroduto rígido de aço galvanizado Ø 1" para descida dos circuitos CC do telhado ao quadro
+- Infraestrutura de Eletrodutos: Eletroduto rígido de aço galvanizado à fogo de Ø 1" para descida dos circuitos de corrente contínua (CC) até o inversor e quadro geral
 
-4. ESTUDO DE PRÉ-VIABILIDADE ECONÔMICA
-A) Aquecimento Solar Térmico:
-   - Economia Anual Estimada na Fatura de Energia: R$ ${Math.round(d.ecoTermicoAno).toLocaleString('pt-BR')}/ano
-   - Tempo de Retorno do Investimento (Payback Simples): ${d.paybackTermico.toFixed(1)} anos
-B) Gerador Fotovoltaico:
-   - Investimento Estimado Chave na Mão: R$ ${Math.round(d.investimentoFV).toLocaleString('pt-BR')}
-   - Economia Anual Estimada na Fatura de Energia: R$ ${Math.round(d.ecoFVAno).toLocaleString('pt-BR')}/ano
-   - Tempo de Retorno do Investimento (Payback Simples): ${d.paybackFV.toFixed(1)} anos
+4. ESTUDO DE VIABILIDADE ECONÔMICA COMPARADA
+A) Sistema de Aquecimento Solar Térmico:
+   - Investimento Total Estimado: R$ ${Math.round(d.investimentoTermico).toLocaleString('pt-BR')} (Equipamentos + Instalação Hidráulica)
+   - Economia Mensal Estimada na Conta de Energia: R$ ${Math.round(d.ecoTermicoMes).toLocaleString('pt-BR')}/mês
+   - Economia Anual Estimada: R$ ${Math.round(d.ecoTermicoAno).toLocaleString('pt-BR')}/ano
+   - Período de Retorno do Investimento (Payback Simples): ${d.paybackTermico.toFixed(1)} anos (${formatarAnosEMeses(d.paybackTermico)})
 
-5. NOTA DE RESPONSABILIDADE TÉCNICA
-O presente memorial constitui o pré-dimensionamento arquitetônico, espacial e físico de responsabilidade do Técnico em Edificações. O projeto elétrico executivo, diagramas unifilares e homologação na concessionária deverão ser referendados por profissional habilitado da área elétrica (Técnico em Eletrotécnica ou Engenheiro Eletricista) conforme Resoluções do CFT/CREA.
+B) Gerador Solar Fotovoltaico:
+   - Investimento Total Estimado: R$ ${Math.round(d.investimentoFV).toLocaleString('pt-BR')} (Equipamentos + Engenharia + Homologação)
+   - Economia Mensal Estimada na Conta de Energia: R$ ${Math.round(d.ecoFVMes).toLocaleString('pt-BR')}/mês
+   - Economia Anual Estimada: R$ ${Math.round(d.ecoFVAno).toLocaleString('pt-BR')}/ano
+   - Período de Retorno do Investimento (Payback Simples): ${d.paybackFV.toFixed(1)} anos (${formatarAnosEMeses(d.paybackFV)})
+
+C) Solução Híbrida Integrada (Térmico + Fotovoltaico):
+   - Investimento Combinado: R$ ${Math.round(d.investimentoTotal).toLocaleString('pt-BR')}
+   - Economia Anual Combinada: R$ ${Math.round(d.ecoTotalAno).toLocaleString('pt-BR')}/ano
+   - Payback Ponderado Integrado: ${d.paybackTotal.toFixed(1)} anos (${formatarAnosEMeses(d.paybackTotal)})
+
+5. DIRETRIZES DE RESPONSABILIDADE TÉCNICA (CFT / CREA)
+O presente dimensionamento técnico constitui o pré-dimensionamento espacial, arquitetônico e físico-construtivo de atribuição do Técnico em Edificações. O projeto elétrico executivo, diagramas unifilares e o protocolo de homologação de acesso junto à distribuidora de energia elétrica local deverão ser emitidos com a respectiva TRT/ART por responsável técnico legalmente habilitado na área elétrica (Técnico em Eletrotécnica ou Engenheiro Eletricista).
 ================================================================================`;
             document.getElementById('memorialOutput').value = memorial;
         }
@@ -1262,13 +2049,19 @@ O presente memorial constitui o pré-dimensionamento arquitetônico, espacial e 
             const textarea = document.getElementById('memorialOutput');
             textarea.select();
             document.execCommand('copy');
-            alert('Memorial copiado com sucesso! Você já pode colar no seu documento do Word ou prancha.');
+            alert('Memorial copiado com sucesso! Você já pode colar no relatório ou na prancha executiva do projeto.');
         }
 
-        // Inicializar cálculos no carregamento da página
-        window.onload = function() {
+        // Adicionar escuta de eventos reativos em todos os campos de entrada e seleção
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('input, select').forEach(element => {
+                element.addEventListener('input', recalcularTudo);
+                element.addEventListener('change', recalcularTudo);
+            });
             recalcularTudo();
-        };
+        });
+
+        window.addEventListener('resize', desenharCartaSolar);
     </script>
 </body>
 </html>
